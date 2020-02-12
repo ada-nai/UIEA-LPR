@@ -10,3 +10,5 @@ linfer.py -> inference helper file for lpr
 `car.bmp` was used in the pre-trained model test
 
 other images are kept for future reference
+
+car_image -> vpd.py -> output blob of detected plate -> lpr.py -> output of plate number
