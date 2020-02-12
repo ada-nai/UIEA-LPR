@@ -1,0 +1,1149 @@
+<?xml version="1.0"?>
+<net name="LPRNet" version="6" batch="1">
+	<layers>
+		<layer name="seq_ind" type="Input" precision="FP32" id="0">
+			<output>
+				<port id="0">
+					<dim>88</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="data" type="Input" precision="FP32" id="1">
+			<output>
+				<port id="0">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="conv1" type="Convolution" precision="FP32" id="2">
+			<data dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="1,1" pads_end="1,1" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>3</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="0" size="256" />
+				<weights offset="256" size="6912" />
+			</blobs>
+		</layer>
+		<layer name="relu_conv1" type="ReLU" precision="FP32" id="3">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="pool1" type="Pooling" precision="FP32" id="4">
+			<data exclude-pad="true" kernel="3,3" pads_begin="0,0" pads_end="0,0" pool-method="max" rounding_type="ceil" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>24</dim>
+					<dim>94</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire1_small/conv_reduce" type="Convolution" precision="FP32" id="5">
+			<data dilations="1,1" group="1" kernel="1,1" output="32" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="7168" size="128" />
+				<weights offset="7296" size="8192" />
+			</blobs>
+		</layer>
+		<layer name="fire1_small/relu_conv_reduce" type="ReLU" precision="FP32" id="6">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire1_small/conv_3x1" type="Convolution" precision="FP32" id="7">
+			<data dilations="1,1" group="1" kernel="3,1" output="32" pads_begin="1,0" pads_end="1,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="15488" size="128" />
+				<weights offset="15616" size="12288" />
+			</blobs>
+		</layer>
+		<layer name="fire1_small/relu_conv_3x1" type="ReLU" precision="FP32" id="8">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire1_small/conv_1x3" type="Convolution" precision="FP32" id="9">
+			<data dilations="1,1" group="1" kernel="1,3" output="32" pads_begin="0,1" pads_end="0,1" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="27904" size="128" />
+				<weights offset="28032" size="12288" />
+			</blobs>
+		</layer>
+		<layer name="fire1_small/relu_conv_1x3" type="ReLU" precision="FP32" id="10">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire1_small/conv_expand" type="Convolution" precision="FP32" id="11">
+			<data dilations="1,1" group="1" kernel="1,1" output="128" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="40320" size="512" />
+				<weights offset="40832" size="16384" />
+			</blobs>
+		</layer>
+		<layer name="fire1_small/relu_conv_expand" type="ReLU" precision="FP32" id="12">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="pool2" type="Pooling" precision="FP32" id="13">
+			<data exclude-pad="true" kernel="3,3" pads_begin="0,0" pads_end="0,0" pool-method="max" rounding_type="ceil" strides="2,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>22</dim>
+					<dim>92</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire2_small/conv_reduce" type="Convolution" precision="FP32" id="14">
+			<data dilations="1,1" group="1" kernel="1,1" output="64" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="57216" size="256" />
+				<weights offset="57472" size="32768" />
+			</blobs>
+		</layer>
+		<layer name="fire2_small/relu_conv_reduce" type="ReLU" precision="FP32" id="15">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire2_small/conv_3x1" type="Convolution" precision="FP32" id="16">
+			<data dilations="1,1" group="1" kernel="3,1" output="64" pads_begin="1,0" pads_end="1,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="90240" size="256" />
+				<weights offset="90496" size="49152" />
+			</blobs>
+		</layer>
+		<layer name="fire2_small/relu_conv_3x1" type="ReLU" precision="FP32" id="17">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire2_small/conv_1x3" type="Convolution" precision="FP32" id="18">
+			<data dilations="1,1" group="1" kernel="1,3" output="64" pads_begin="0,1" pads_end="0,1" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="139648" size="256" />
+				<weights offset="139904" size="49152" />
+			</blobs>
+		</layer>
+		<layer name="fire2_small/relu_conv_1x3" type="ReLU" precision="FP32" id="19">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire2_small/conv_expand" type="Convolution" precision="FP32" id="20">
+			<data dilations="1,1" group="1" kernel="1,1" output="256" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="189056" size="1024" />
+				<weights offset="190080" size="65536" />
+			</blobs>
+		</layer>
+		<layer name="fire2_small/relu_conv_expand" type="ReLU" precision="FP32" id="21">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire3_small/conv_reduce" type="Convolution" precision="FP32" id="22">
+			<data dilations="1,1" group="1" kernel="1,1" output="64" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="255616" size="256" />
+				<weights offset="255872" size="65536" />
+			</blobs>
+		</layer>
+		<layer name="fire3_small/relu_conv_reduce" type="ReLU" precision="FP32" id="23">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire3_small/conv_3x1" type="Convolution" precision="FP32" id="24">
+			<data dilations="1,1" group="1" kernel="3,1" output="64" pads_begin="1,0" pads_end="1,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="321408" size="256" />
+				<weights offset="321664" size="49152" />
+			</blobs>
+		</layer>
+		<layer name="fire3_small/relu_conv_3x1" type="ReLU" precision="FP32" id="25">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire3_small/conv_1x3" type="Convolution" precision="FP32" id="26">
+			<data dilations="1,1" group="1" kernel="1,3" output="64" pads_begin="0,1" pads_end="0,1" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="370816" size="256" />
+				<weights offset="371072" size="49152" />
+			</blobs>
+		</layer>
+		<layer name="fire3_small/relu_conv_1x3" type="ReLU" precision="FP32" id="27">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="fire3_small/conv_expand" type="Convolution" precision="FP32" id="28">
+			<data dilations="1,1" group="1" kernel="1,1" output="256" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="420224" size="1024" />
+				<weights offset="421248" size="65536" />
+			</blobs>
+		</layer>
+		<layer name="fire3_small/relu_conv_expand" type="ReLU" precision="FP32" id="29">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="pool3" type="Pooling" precision="FP32" id="30">
+			<data exclude-pad="true" kernel="3,3" pads_begin="0,0" pads_end="0,0" pool-method="max" rounding_type="ceil" strides="2,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>11</dim>
+					<dim>90</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>5</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="conv2" type="Convolution" precision="FP32" id="31">
+			<data dilations="1,1" group="1" kernel="5,1" output="128" pads_begin="0,0" pads_end="0,0" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>256</dim>
+					<dim>5</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="486784" size="512" />
+				<weights offset="487296" size="655360" />
+			</blobs>
+		</layer>
+		<layer name="relu_conv2" type="ReLU" precision="FP32" id="32">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="conv3_w" type="Convolution" precision="FP32" id="33">
+			<data dilations="1,1" group="1" kernel="1,13" output="71" pads_begin="0,6" pads_end="0,6" quantization_level="I8" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="1142656" size="284" />
+				<weights offset="1142940" size="472576" />
+			</blobs>
+		</layer>
+		<layer name="relu_conv3_w" type="ReLU" precision="FP32" id="34">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="pattern" type="FullyConnected" precision="FP32" id="35">
+			<data out-size="128" quantization_level="I8" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="1615516" size="512" />
+				<weights offset="1616028" size="3198976" />
+			</blobs>
+		</layer>
+		<layer name="46/Output_0/Data__const" type="Const" precision="I32" id="36">
+			<output>
+				<port id="0">
+					<dim>4</dim>
+				</port>
+			</output>
+			<blobs>
+				<custom offset="4815004" size="16" />
+			</blobs>
+		</layer>
+		<layer name="reshape" type="Reshape" precision="FP32" id="37">
+			<data axis="0" dim="" num_axes="-1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+				<port id="1">
+					<dim>4</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="tile" type="Tile" precision="FP32" id="38">
+			<data axis="3" tiles="88" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="concat" type="Concat" precision="FP32" id="39">
+			<data axis="1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+				<port id="1">
+					<dim>1</dim>
+					<dim>128</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>199</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="result" type="Convolution" precision="FP32" id="40">
+			<data dilations="1,1" group="1" kernel="1,1" output="71" pads_begin="0,0" pads_end="0,0" quantization_level="FP32" strides="1,1" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>199</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</output>
+			<blobs>
+				<biases offset="4815020" size="284" />
+				<weights offset="4815304" size="56516" />
+			</blobs>
+		</layer>
+		<layer name="p_result" type="Permute" precision="FP32" id="41">
+			<data order="3,0,1,2" />
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+					<dim>88</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1">
+					<dim>88</dim>
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="45/Output_0/Data__const" type="Const" precision="I32" id="42">
+			<output>
+				<port id="0">
+					<dim>3</dim>
+				</port>
+			</output>
+			<blobs>
+				<custom offset="4871820" size="12" />
+			</blobs>
+		</layer>
+		<layer name="reshape2" type="Reshape" precision="FP32" id="43">
+			<data axis="0" dim="" num_axes="-1" />
+			<input>
+				<port id="0">
+					<dim>88</dim>
+					<dim>1</dim>
+					<dim>71</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>88</dim>
+					<dim>1</dim>
+					<dim>71</dim>
+				</port>
+			</output>
+		</layer>
+		<layer name="decode" type="CTCGreedyDecoder" precision="FP32" id="44">
+			<data ctc_merge_repeated="1" />
+			<input>
+				<port id="0">
+					<dim>88</dim>
+					<dim>1</dim>
+					<dim>71</dim>
+				</port>
+				<port id="1">
+					<dim>88</dim>
+					<dim>1</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>88</dim>
+					<dim>1</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+	</layers>
+	<edges>
+		<edge from-layer="0" from-port="0" to-layer="44" to-port="1" />
+		<edge from-layer="1" from-port="0" to-layer="2" to-port="0" />
+		<edge from-layer="2" from-port="1" to-layer="3" to-port="0" />
+		<edge from-layer="3" from-port="1" to-layer="4" to-port="0" />
+		<edge from-layer="4" from-port="1" to-layer="5" to-port="0" />
+		<edge from-layer="5" from-port="1" to-layer="6" to-port="0" />
+		<edge from-layer="6" from-port="1" to-layer="7" to-port="0" />
+		<edge from-layer="7" from-port="1" to-layer="8" to-port="0" />
+		<edge from-layer="8" from-port="1" to-layer="9" to-port="0" />
+		<edge from-layer="9" from-port="1" to-layer="10" to-port="0" />
+		<edge from-layer="10" from-port="1" to-layer="11" to-port="0" />
+		<edge from-layer="11" from-port="1" to-layer="12" to-port="0" />
+		<edge from-layer="12" from-port="1" to-layer="13" to-port="0" />
+		<edge from-layer="13" from-port="1" to-layer="14" to-port="0" />
+		<edge from-layer="14" from-port="1" to-layer="15" to-port="0" />
+		<edge from-layer="15" from-port="1" to-layer="16" to-port="0" />
+		<edge from-layer="16" from-port="1" to-layer="17" to-port="0" />
+		<edge from-layer="17" from-port="1" to-layer="18" to-port="0" />
+		<edge from-layer="18" from-port="1" to-layer="19" to-port="0" />
+		<edge from-layer="19" from-port="1" to-layer="20" to-port="0" />
+		<edge from-layer="20" from-port="1" to-layer="21" to-port="0" />
+		<edge from-layer="21" from-port="1" to-layer="22" to-port="0" />
+		<edge from-layer="22" from-port="1" to-layer="23" to-port="0" />
+		<edge from-layer="23" from-port="1" to-layer="24" to-port="0" />
+		<edge from-layer="24" from-port="1" to-layer="25" to-port="0" />
+		<edge from-layer="25" from-port="1" to-layer="26" to-port="0" />
+		<edge from-layer="26" from-port="1" to-layer="27" to-port="0" />
+		<edge from-layer="27" from-port="1" to-layer="28" to-port="0" />
+		<edge from-layer="28" from-port="1" to-layer="29" to-port="0" />
+		<edge from-layer="29" from-port="1" to-layer="30" to-port="0" />
+		<edge from-layer="30" from-port="1" to-layer="31" to-port="0" />
+		<edge from-layer="31" from-port="1" to-layer="32" to-port="0" />
+		<edge from-layer="32" from-port="1" to-layer="33" to-port="0" />
+		<edge from-layer="33" from-port="1" to-layer="34" to-port="0" />
+		<edge from-layer="34" from-port="1" to-layer="39" to-port="0" />
+		<edge from-layer="34" from-port="1" to-layer="35" to-port="0" />
+		<edge from-layer="35" from-port="1" to-layer="37" to-port="0" />
+		<edge from-layer="36" from-port="0" to-layer="37" to-port="1" />
+		<edge from-layer="37" from-port="2" to-layer="38" to-port="0" />
+		<edge from-layer="38" from-port="1" to-layer="39" to-port="1" />
+		<edge from-layer="39" from-port="2" to-layer="40" to-port="0" />
+		<edge from-layer="40" from-port="1" to-layer="41" to-port="0" />
+		<edge from-layer="41" from-port="1" to-layer="43" to-port="0" />
+		<edge from-layer="42" from-port="0" to-layer="43" to-port="1" />
+		<edge from-layer="43" from-port="2" to-layer="44" to-port="0" />
+	</edges>
+	<statistics>
+		<layer>
+			<name>concat</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -2.164291, -2.322438, -2.939935, -1.880298, -2.417380, -1.536467, -1.459999, -2.091069, -4.624750, -1.992275, -1.929561, -3.820985, -1.676997, -2.494765, -2.496740, -1.189873, -1.554134, -1.758603, -1.806948, -3.155364, -1.692444, -1.731497, -2.087521, -0.903761, -4.814262, -2.058711, -1.658811, -2.247234, -2.806656, -1.768720, -1.768732, -2.438481, -2.586417, -2.316912, -1.959421, -2.251451, -1.997761, -2.420890, -2.244236, -2.986979, -3.863318, -1.554082, -2.010072, -4.355974, -2.457117, -1.936087, -1.515437, -3.074288, -7.644201, -2.739891, -2.301255, -2.064566, -1.708771, -3.269259, -3.865408, -8.558304, -4.668336, -2.643782, -11.622900, -2.387968, -2.202042, -7.701473, -2.077775, -1.723505, -1.885810, -1.699111, -2.653985, -2.157284, -2.337085, -2.774206, -2.370868, -1.757855, -2.009685, -1.337209, -1.935844, -1.504950, -1.733539, -2.659920, -1.419544, -18.437536, -1.432814, -2.158587, -2.523098, -2.611004, -1.978830, -6.043081, -2.168104, -1.905280, -3.036022, -5.520495, -2.285987, -2.484413, -2.462305, -2.655342, -2.288046, -2.955806, -2.755509, -2.646471, -2.250329, -1.944195, -6.513594, -2.427064, -1.978135, -1.549885, -2.173381, -1.963493, -5.631084, -1.861407, -2.362957, -3.530821, -2.755742, -2.661187, -2.112477, -1.919436, -1.727550, -2.313748, -3.503918, -1.953473, -3.347196, -4.033703, -2.359569, -1.810475, -20.136536, -5.273794, -1.790526, -2.893194, -3.898597, -2.527322</min>
+			<max>0.855657, 0.766961, 0.756185, 1.528155, 0.854354, 0.932086, 1.029030, 0.575236, 0.972730, 0.470022, 0.379686, 0.723382, 0.347712, 0.441611, 0.677222, 0.689676, 0.769033, 1.021330, 0.649142, 0.754034, 0.537246, 0.378477, 0.712899, 0.773065, 0.841390, 0.588859, 0.773883, 0.429433, 0.660656, 0.401921, 0.964962, 0.725484, 0.534352, 0.685903, 0.733133, 0.675480, 1.235986, 0.778130, 0.387331, 0.671349, 0.535089, 0.775442, 0.435745, 0.503931, 0.421145, 0.905714, 0.583734, 0.525443, 0.602540, 0.687023, 1.359369, 0.713756, 0.599450, 0.592625, 0.886287, 0.611502, 1.379877, 0.680164, 0.580513, 0.549156, 0.542006, 0.963146, 0.236212, 0.820801, 0.640409, 0.538405, 0.768144, 3.681136, 0.726153, 0.478617, 0.828447, 1.973957, 1.907075, 2.470774, 2.346050, 1.892179, 2.103940, 3.101889, 2.391822, 3.324807, 2.360310, 2.458409, 4.720315, 2.307455, 1.543017, 2.050123, 2.759767, 2.662726, 1.966998, 1.906292, 2.513080, 2.530412, 2.442268, 1.837290, 3.522989, 5.618392, 2.295695, 2.598321, 1.547830, 2.126009, 1.827938, 2.743852, 2.620197, 1.629652, 2.451391, 2.286746, 1.569831, 2.278537, 1.776305, 6.767633, 1.448632, 6.049217, 3.108225, 1.952767, 6.646216, 1.657884, 2.668585, 2.876164, 2.114922, 4.184802, 4.715750, 1.940477, 1.873191, 2.736711, 6.391356, 6.182351, 6.368523, 8.304164, 1.222004, 8.899870, 2.057858, 1.910267, 5.590934, 2.054396, 2.424060, 3.924848, 2.428838, 1.931470, 2.041834, 2.542528, 1.652045, 1.896322, 2.149406, 2.477596, 2.424298, 2.445069, 3.096138, 1.909275, 1.550933, 2.945718, -0.450515, 3.219730, 1.930188, 2.833231, 2.317399, 2.660112, 4.811356, 2.253391, 2.464487, 1.284108, 8.389408, 1.979117, 1.387664, 2.317030, 4.406434, 2.364188, 1.832222, 2.206244, 2.248951, 2.487833, 1.826148, 5.159889, 2.239402, 2.390488, 3.544082, 1.907790, 1.864492, 15.966466, 2.944020, 1.559697, 1.497924, 1.860446, 2.175959, 3.075139, 3.067989, 2.794094, 1.794835, 2.717713, 2.500749, 2.590245, 3.123442, 3.371797, 4.250096, -10.653842, 7.218647, 2.710034, 2.083210, 6.386056, 1.341905</max>
+		</layer>
+		<layer>
+			<name>conv1</name>
+			<min>-3.652211, -4.548208, -6.246492, -0.674041, -4.201730, -3.178394, -9.222250, -7.565010, -7.533330, -4.573831, -11.266838, -5.171038, -4.363829, -4.205803, -5.431664, -7.665269, -3.403890, -6.970990, -1.087797, -4.141762, -4.745019, -5.196712, -6.860384, -5.020693, -6.507735, -6.633042, -5.447368, -6.679873, -9.753852, -5.246470, -4.564614, -8.415320, -7.988101, -3.947904, -13.388194, -7.062674, -3.667696, -10.101929, -1.689963, -6.211902, -6.871017, -2.387368, -8.263245, -6.579071, -2.380524, -5.247977, -6.926018, -4.502759, -5.855952, -5.264684, -3.226827, -5.203685, -7.684686, -4.690296, -3.421248, -13.622366, -3.043355, -5.212318, -4.053997, -5.623225, -5.979179, -10.113017, -7.533273, -4.853895</min>
+			<max>5.140550, 6.906327, 5.276833, 0.957184, 5.733043, 5.586656, 8.175941, 6.286814, 8.848027, 6.496203, 7.498220, 4.525346, 2.485764, 4.095982, 4.914837, 8.924070, 3.778291, 6.060886, 3.215401, 2.488796, 5.393886, 5.549800, 6.997329, 5.838160, 4.913776, 10.716143, 4.362957, 5.940252, 12.772952, 7.220349, 3.261480, 10.059635, 6.651850, 2.950872, 11.091149, 6.742132, 3.650035, 8.587179, 2.763879, 4.277616, 11.581767, 2.239597, 5.699358, 5.432875, 1.784608, 5.386084, 4.380629, 6.994524, 4.748490, 3.422478, 6.135737, 2.664987, 6.745206, 2.574700, 6.564127, 8.968923, 2.608935, 8.266464, 5.904207, 9.063972, 6.550776, 7.109301, 7.309756, 8.931138</max>
+		</layer>
+		<layer>
+			<name>conv2</name>
+			<min>-12.625163, -4.397133, -2.644384, -3.536643, -3.610177, -4.317132, -1.814772, -2.191210, -3.564846, -4.548091, -2.824122, -3.603167, -3.828651, -6.060819, -4.051392, -10.756386, -3.186324, -8.798984, -6.357087, -3.502939, -3.434788, -2.467868, -3.826053, -3.800148, -2.708801, -10.197258, -2.388405, -3.248887, -2.869420, -3.480084, -4.541144, -3.159165, -3.565403, -5.559679, -4.060614, -4.024678, -3.747468, -2.486664, -2.603419, -3.922917, -4.892223, -6.578934, -3.265746, -3.037079, -4.600082, -2.606399, -4.368220, -3.795290, -3.916808, -10.361959, -2.483294, -2.681149, -2.795427, -4.433588, -3.180119, -2.721705, -3.156181, -10.386389, -3.183624, -3.161450, -3.695925, -3.549292, -2.997777, -1.828199, -2.997329, -2.251240, -10.142984, -2.953757, -4.333797, -4.540922, -2.626155, -3.198854, -2.532357, -4.169703, -4.333729, -4.563631, -2.699570, -3.173879, -3.239587, -2.501007, -2.487085, -3.583621, -2.642604, -3.320978, -3.110852, -2.423140, -4.577065, -3.136633, -3.256460, -4.320828, -2.983049, -2.682910, -4.203756, -2.822155, -6.007296, -3.492530, -5.144628, -13.619384, -3.263891, -11.636833, -2.617508, -4.214141, -2.083701, -3.004108, -3.128106, -2.739423, -6.097960, -2.345933, -2.507178, -4.041502, -3.538296, -14.197898, -2.750872, -3.476966, -3.294336, -3.194663, -2.307699, -2.607262, -2.903996, -3.482782, -3.972641, -14.224760, -6.116092, -5.258983, -2.638149, -5.534846, -4.184958, -1.530979</min>
+			<max>3.533627, 1.520428, 1.768446, 1.684833, 2.749979, 5.308498, 2.331140, 5.487236, 1.511603, 1.964843, 1.915642, 1.491107, 2.992757, 1.487663, 1.747823, 3.148400, 1.861138, 2.924449, 1.432566, 1.571818, 2.184232, 1.661875, 1.730553, 2.604240, 1.946372, 3.301068, 2.609871, 1.417261, 1.880880, 1.578312, 2.446555, 1.791360, 2.557209, 1.480841, 2.283664, 2.067613, 1.490511, 1.779125, 3.012902, 1.368701, 1.604701, 9.146325, 8.803477, 2.144420, 1.577367, 1.565277, 1.509905, 5.703854, 2.934924, 3.214124, 1.591299, 1.505508, 1.578963, 1.591018, 1.669776, 7.689878, 1.579863, 2.693196, 1.441832, 4.359479, 1.641667, 1.514618, 3.306618, 1.604477, 3.616065, 5.487117, 2.756708, 1.192938, 2.990500, 1.935500, 1.695459, 1.210394, 1.790378, 1.757311, 1.640046, 1.583319, 2.043930, 1.999080, 7.384157, 2.250841, 3.200345, 2.963149, 1.516876, 2.527644, 3.839601, 1.661404, 4.726214, 3.388816, 2.452142, 3.777561, 1.612624, 1.513057, 2.660988, 3.594336, 10.441744, 1.867687, 1.491485, 3.439333, 1.956531, 3.654541, 2.734940, 1.937137, 1.368843, 1.654726, 2.078568, 1.568052, 1.464157, 1.841969, 3.584718, 2.201912, 1.831437, 3.377659, 1.950618, 2.077560, 1.864217, 3.569675, 1.858977, 1.970013, 1.421211, 2.099186, 1.627410, 3.537914, 2.125099, 1.458453, 1.499002, 1.566328, 1.646909, 1.916839</max>
+		</layer>
+		<layer>
+			<name>conv3_w</name>
+			<min>-2.610410, -2.539079, -2.176002, -4.366225, -2.153633, -3.085949, -2.602642, -2.690834, -2.923965, -1.803887, -1.722136, -3.746963, -2.265942, -1.742073, -1.795316, -2.624487, -2.570489, -3.579123, -1.905891, -2.231790, -2.193716, -1.855543, -1.966393, -3.186161, -3.123211, -2.194326, -2.815256, -1.726802, -2.278020, -2.663595, -2.372253, -2.970102, -2.624565, -2.589366, -2.403109, -2.164968, -6.094959, -3.276904, -2.471735, -1.975185, -1.958759, -3.046803, -2.147145, -2.274278, -2.322788, -2.763168, -2.103460, -2.189024, -2.800221, -1.527026, -6.329981, -2.187310, -2.155801, -1.808452, -3.941106, -4.196928, -11.651917, -1.942143, -1.945408, -2.116163, -2.136530, -2.955095, -2.968946, -2.479366, -2.031240, -2.298448, -1.762113, -8.266047, -2.505241, -2.382692, -4.773044</min>
+			<max>0.855657, 0.766961, 0.756185, 1.528155, 0.854354, 0.932086, 1.029030, 0.575236, 0.972730, 0.470022, 0.379686, 0.723382, 0.347712, 0.441611, 0.677222, 0.689676, 0.769033, 1.021330, 0.649142, 0.754034, 0.537246, 0.378477, 0.712899, 0.773065, 0.841390, 0.588859, 0.773883, 0.429433, 0.660656, 0.401921, 0.964962, 0.725484, 0.534352, 0.685903, 0.733133, 0.675480, 1.235986, 0.778130, 0.387331, 0.671349, 0.535089, 0.775442, 0.435745, 0.503931, 0.421145, 0.905714, 0.583734, 0.525443, 0.602540, 0.687023, 1.359369, 0.713756, 0.599450, 0.592625, 0.886287, 0.611502, 1.379877, 0.680164, 0.580513, 0.549156, 0.542006, 0.963146, 0.236212, 0.820801, 0.640409, 0.538405, 0.768144, 3.681136, 0.726153, 0.478617, 0.828447</max>
+		</layer>
+		<layer>
+			<name>data</name>
+			<min>0.000000, 0.000000, 0.000000</min>
+			<max>255.000000, 255.000000, 255.000000</max>
+		</layer>
+		<layer>
+			<name>decode</name>
+			<min>11.000000, 40.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000</min>
+			<max>66.000000, 59.000000, 69.000000, 60.000000, 9.000000, 9.000000, 45.000000, 67.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000, -1.000000</max>
+		</layer>
+		<layer>
+			<name>fire1_small/conv_1x3</name>
+			<min>-5.055039, -3.508068, -5.024673, -5.966712, -3.220649, -5.836535, -4.952312, -5.277858, -4.363898, -3.865590, -4.249295, -7.613588, -2.905670, -4.353676, -3.259186, -2.338042, -4.734015, -3.646690, -3.356125, -2.853191, -2.996210, -5.605073, -6.674377, -5.374749, -2.482357, -4.587175, -5.820848, -9.318307, -7.691108, -6.197828, -5.625298, -7.666148</min>
+			<max>7.777027, 8.162677, 7.060055, 7.303615, 8.642486, 4.170534, 5.434154, 6.980188, 6.478811, 6.880371, 6.879227, 5.476527, 6.104692, 4.168400, 5.329570, 7.141295, 5.521320, 6.685498, 8.640151, 9.072343, 6.312901, 8.867346, 6.064400, 5.218592, 4.868745, 10.769049, 4.324142, 9.489583, 7.821389, 7.188974, 7.857893, 8.426749</max>
+		</layer>
+		<layer>
+			<name>fire1_small/conv_3x1</name>
+			<min>-3.333439, -7.913307, -3.052812, -1.249296, -5.675426, -6.869944, -5.166490, -7.734864, -4.511203, -5.449320, -6.508387, -4.555776, -4.673973, -4.560652, -4.230158, -4.224895, -6.800643, -6.575636, -5.051768, -4.753503, -2.431759, -3.545564, -3.626272, -9.204302, -1.503265, -5.040336, -8.208397, -3.999795, -1.859379, -8.059474, -9.017466, -6.219090</min>
+			<max>7.148094, 7.140897, 6.020904, 5.786381, 6.150854, 5.782705, 6.778213, 7.715986, 8.884480, 3.735133, 3.651113, 4.541886, 6.745571, 6.720175, 3.567747, 4.628753, 5.559233, 6.502028, 4.154635, 2.379085, 9.533865, 8.295405, 7.062616, 4.419368, 9.019661, 5.161271, 4.890641, 4.972346, 7.595318, 6.283554, 6.132178, 3.902367</max>
+		</layer>
+		<layer>
+			<name>fire1_small/conv_expand</name>
+			<min>-4.896079, -4.784245, -5.916213, -7.527268, -3.316700, -8.371759, -6.806331, -6.007727, -3.934610, -8.718225, -7.036486, -7.385936, -8.788637, -11.573197, -3.694494, -6.171977, -7.474049, -4.687068, -3.966754, -4.742432, -7.898961, -9.723939, -6.975043, -7.816143, -9.827128, -6.103061, -6.780532, -5.939999, -6.861675, -3.186526, -4.616850, -5.560456, -5.630196, -5.885654, -3.359170, -8.136770, -6.754639, -4.792486, -6.524352, -12.254346, -4.885145, -8.295588, -5.197331, -7.068199, -6.327199, -7.050424, -6.513071, -4.496998, -5.764050, -9.239811, -5.352386, -10.764050, -4.767476, -4.079494, -3.703989, -7.613097, -5.886881, -6.645448, -5.903452, -7.237859, -6.908112, -5.707591, -3.684694, -5.960332, -9.451729, -2.561758, -4.864853, -4.990160, -6.369092, -6.605582, -6.956455, -5.137952, -3.572292, -5.048713, -5.455292, -4.849333, -6.125247, -4.973607, -6.971373, -7.136157, -5.458054, -5.959716, -12.933469, -5.735901, -8.066298, -5.064433, -4.471025, -5.689811, -8.200331, -7.117918, -4.659371, -6.073699, -6.646410, -6.292872, -4.695152, -7.854989, -5.585408, -4.492588, -5.284015, -6.733053, -2.557827, -3.715759, -7.135974, -6.210174, -7.671911, -4.497914, -7.191747, -6.157603, -12.977872, -4.871956, -5.748306, -6.054866, -6.267351, -4.868507, -3.440928, -5.972675, -6.625786, -6.134800, -5.511081, -6.861535, -5.245563, -8.274103, -6.368184, -5.144597, -6.099011, -6.245657, -12.606855, -8.511548</min>
+			<max>6.336308, 4.642532, 6.595642, 3.742797, 8.091406, 3.726863, 8.149952, 6.022142, 8.188844, 4.183142, 9.789543, 5.828625, 5.355117, 5.698557, 7.300335, 6.562860, 6.091546, 6.218506, 6.151478, 6.845715, 6.322960, 5.518674, 7.917527, 7.868219, 6.788667, 7.574995, 5.255313, 3.965923, 9.295394, 6.133234, 6.486980, 6.450157, 6.895561, 5.887733, 8.014068, 7.403666, 5.561379, 4.578154, 5.257075, 5.488817, 8.221608, 5.206055, 5.253898, 5.070620, 6.390105, 6.161047, 7.295952, 6.707243, 8.371967, 7.367469, 7.471734, 4.132164, 7.009287, 6.839469, 7.585324, 6.392080, 5.786315, 3.880344, 5.917636, 5.338875, 5.351772, 7.043650, 5.443910, 2.784368, 6.803580, 6.036033, 8.726698, 7.163081, 7.201141, 7.402784, 7.316999, 6.535029, 4.283328, 7.203880, 5.490251, 5.714152, 7.183372, 8.526775, 4.182202, 3.946326, 7.667301, 7.528315, 4.663139, 6.468657, 9.493517, 4.476044, 7.002403, 4.463255, 4.089437, 4.376685, 4.685530, 6.911233, 5.004527, 7.305326, 7.341395, 5.237681, 8.788555, 5.295693, 4.963021, 5.459127, 5.339744, 5.239004, 5.300593, 6.064887, 4.897575, 5.414970, 7.779529, 3.785195, 6.519820, 4.892653, 5.458430, 3.648134, 4.091211, 6.060548, 4.460238, 5.489353, 8.241743, 6.477386, 4.405165, 4.291198, 6.933552, 7.288836, 6.492459, 4.643635, 5.705637, 5.386655, 8.924078, 3.875231</max>
+		</layer>
+		<layer>
+			<name>fire1_small/conv_reduce</name>
+			<min>-7.314811, -4.230185, -6.638330, -2.375868, -3.691938, -8.523698, -9.797098, -8.942577, -4.669613, -6.344053, -3.840367, -1.276681, -7.706227, -1.522506, -0.163659, -8.063564, -9.496776, -1.735773, -7.558903, -7.936291, -6.392689, -8.748434, -10.905034, -8.345824, -9.071362, -3.918844, -7.050201, -8.385531, -6.132803, -4.168841, -9.292191, -7.913477</min>
+			<max>4.052445, 4.654587, 3.555505, 3.702484, 6.164340, 5.293082, 5.073029, 4.538810, 4.053486, 5.072926, 5.929383, 5.416520, 2.478841, 9.213718, 8.415408, 4.979585, 1.732444, 6.611269, 7.519622, 6.926536, 4.271527, 5.290087, 6.553559, 2.690378, 5.147738, 9.004613, 4.155654, 3.884512, 5.223478, 3.565349, 4.000217, 6.768880</max>
+		</layer>
+		<layer>
+			<name>fire1_small/relu_conv_1x3</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>7.777027, 8.162677, 7.060055, 7.303615, 8.642486, 4.170534, 5.434154, 6.980188, 6.478811, 6.880371, 6.879227, 5.476527, 6.104692, 4.168400, 5.329570, 7.141295, 5.521320, 6.685498, 8.640151, 9.072343, 6.312901, 8.867346, 6.064400, 5.218592, 4.868745, 10.769049, 4.324142, 9.489583, 7.821389, 7.188974, 7.857893, 8.426749</max>
+		</layer>
+		<layer>
+			<name>fire1_small/relu_conv_3x1</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>7.148094, 7.140897, 6.020904, 5.786381, 6.150854, 5.782705, 6.778213, 7.715986, 8.884480, 3.735133, 3.651113, 4.541886, 6.745571, 6.720175, 3.567747, 4.628753, 5.559233, 6.502028, 4.154635, 2.379085, 9.533865, 8.295405, 7.062616, 4.419368, 9.019661, 5.161271, 4.890641, 4.972346, 7.595318, 6.283554, 6.132178, 3.902367</max>
+		</layer>
+		<layer>
+			<name>fire1_small/relu_conv_expand</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>6.336308, 4.642532, 6.595642, 3.742797, 8.091406, 3.726863, 8.149952, 6.022142, 8.188844, 4.183142, 9.789543, 5.828625, 5.355117, 5.698557, 7.300335, 6.562860, 6.091546, 6.218506, 6.151478, 6.845715, 6.322960, 5.518674, 7.917527, 7.868219, 6.788667, 7.574995, 5.255313, 3.965923, 9.295394, 6.133234, 6.486980, 6.450157, 6.895561, 5.887733, 8.014068, 7.403666, 5.561379, 4.578154, 5.257075, 5.488817, 8.221608, 5.206055, 5.253898, 5.070620, 6.390105, 6.161047, 7.295952, 6.707243, 8.371967, 7.367469, 7.471734, 4.132164, 7.009287, 6.839469, 7.585324, 6.392080, 5.786315, 3.880344, 5.917636, 5.338875, 5.351772, 7.043650, 5.443910, 2.784368, 6.803580, 6.036033, 8.726698, 7.163081, 7.201141, 7.402784, 7.316999, 6.535029, 4.283328, 7.203880, 5.490251, 5.714152, 7.183372, 8.526775, 4.182202, 3.946326, 7.667301, 7.528315, 4.663139, 6.468657, 9.493517, 4.476044, 7.002403, 4.463255, 4.089437, 4.376685, 4.685530, 6.911233, 5.004527, 7.305326, 7.341395, 5.237681, 8.788555, 5.295693, 4.963021, 5.459127, 5.339744, 5.239004, 5.300593, 6.064887, 4.897575, 5.414970, 7.779529, 3.785195, 6.519820, 4.892653, 5.458430, 3.648134, 4.091211, 6.060548, 4.460238, 5.489353, 8.241743, 6.477386, 4.405165, 4.291198, 6.933552, 7.288836, 6.492459, 4.643635, 5.705637, 5.386655, 8.924078, 3.875231</max>
+		</layer>
+		<layer>
+			<name>fire1_small/relu_conv_reduce</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>4.052445, 4.654587, 3.555505, 3.702484, 6.164340, 5.293082, 5.073029, 4.538810, 4.053486, 5.072926, 5.929383, 5.416520, 2.478841, 9.213718, 8.415408, 4.979585, 1.732444, 6.611269, 7.519622, 6.926536, 4.271527, 5.290087, 6.553559, 2.690378, 5.147738, 9.004613, 4.155654, 3.884512, 5.223478, 3.565349, 4.000217, 6.768880</max>
+		</layer>
+		<layer>
+			<name>fire2_small/conv_1x3</name>
+			<min>-5.662002, -5.676568, -6.158097, -4.506341, -4.845433, -4.324377, -5.155601, -6.273253, -4.009207, -4.479293, -6.006046, -5.569757, -5.349643, -4.475398, -5.915718, -3.675591, -5.139047, -6.643983, -5.841126, -5.551879, -6.649689, -5.146991, -5.376944, -6.105054, -4.315125, -4.391626, -4.792040, -5.687278, -5.618778, -5.149968, -5.184719, -3.969377, -4.500350, -4.757916, -2.934583, -7.878256, -5.084547, -4.812435, -4.511007, -5.194366, -4.860472, -6.419716, -4.406530, -4.186063, -5.422177, -4.900561, -5.947144, -4.921841, -6.605070, -5.691771, -5.050965, -6.088966, -4.852669, -6.275869, -5.569353, -4.812712, -5.302036, -5.136350, -5.364039, -6.830221, -5.433231, -5.049799, -5.291489, -5.744180</min>
+			<max>7.543250, 5.685919, 5.571259, 6.159765, 4.946389, 5.994325, 5.979223, 5.221121, 5.421602, 4.830872, 4.970909, 6.824202, 4.754390, 4.378588, 5.899417, 6.984755, 6.424849, 3.989743, 5.844888, 5.204987, 5.515413, 5.654727, 5.666178, 5.941490, 6.009606, 4.572641, 5.144457, 4.970737, 7.469104, 5.685948, 4.991958, 5.938211, 4.179103, 4.385413, 4.467889, 6.069292, 6.256787, 3.839530, 4.951977, 5.706465, 5.560437, 6.201326, 5.544044, 6.601505, 5.448153, 5.595945, 6.328124, 6.757728, 5.024930, 4.989180, 4.523674, 4.613168, 5.627579, 5.282365, 6.987792, 4.983933, 5.956266, 6.186394, 5.410151, 4.709256, 5.730506, 4.333102, 5.391086, 6.527787</max>
+		</layer>
+		<layer>
+			<name>fire2_small/conv_3x1</name>
+			<min>-4.932095, -6.657721, -5.798114, -6.322212, -6.015411, -3.749066, -5.753113, -5.134863, -5.197032, -7.154025, -6.889036, -6.384786, -4.998718, -5.360829, -4.004467, -5.276424, -5.883854, -6.534321, -6.349007, -6.719009, -7.428867, -6.866589, -3.420825, -6.404718, -3.042114, -5.347092, -6.023545, -5.509349, -2.360013, -6.047067, -6.596389, -5.181498, -4.414567, -4.124516, -5.186379, -5.202356, -4.276637, -4.714232, -5.519405, -4.372355, -5.339107, -7.538147, -6.885551, -5.850635, -5.681382, -3.291820, -5.624345, -6.643957, -3.869439, -4.853380, -4.810822, -5.103640, -2.615209, -3.407078, -5.860645, -4.242049, -8.333838, -4.682615, -4.503227, -3.129168, -3.168288, -4.812769, -5.395082, -6.248891</min>
+			<max>4.973233, 6.596076, 5.251996, 5.365886, 5.646044, 6.911343, 5.717467, 5.676366, 4.451376, 6.859503, 4.082691, 7.589256, 4.064390, 3.868915, 5.991147, 6.490387, 3.837931, 4.475589, 6.617901, 5.246351, 6.220881, 6.962050, 6.162057, 4.212463, 5.654096, 7.971489, 4.199929, 5.102161, 5.298774, 6.220940, 4.832434, 7.023307, 4.928368, 4.016806, 5.691723, 6.734140, 5.292363, 4.941484, 4.894709, 6.652419, 6.798979, 4.924473, 5.386014, 5.285189, 5.499180, 6.396723, 6.662220, 3.814257, 6.031660, 4.580714, 3.345694, 5.167852, 8.806727, 5.407187, 5.637810, 3.989860, 5.504767, 5.665143, 3.062729, 4.679807, 4.772268, 6.245214, 5.884959, 4.326928</max>
+		</layer>
+		<layer>
+			<name>fire2_small/conv_expand</name>
+			<min>-5.352913, -4.359830, -4.083689, -4.640376, -5.832315, -5.854820, -6.066860, -3.882945, -5.598419, -5.757027, -2.968693, -4.341277, -3.193071, -5.531581, -6.041298, -6.348742, -4.443198, -5.119506, -6.043571, -4.884691, -6.737735, -6.260341, -4.495957, -5.150669, -3.807967, -4.616923, -4.557356, -7.008202, -6.681836, -7.242733, -7.997607, -5.216064, -6.125443, -6.276810, -4.126021, -6.326279, -5.914804, -3.428145, -4.238825, -7.659708, -5.718788, -6.375203, -5.802806, -6.355869, -6.485191, -4.788131, -5.589312, -5.945675, -6.818680, -5.286139, -6.381989, -4.630118, -5.435690, -6.433600, -4.468750, -4.840146, -6.225284, -3.632631, -7.197535, -5.445656, -6.483519, -5.633223, -6.773077, -3.875226, -6.650830, -7.235644, -6.102355, -4.399632, -4.670931, -4.433387, -5.168150, -4.352858, -4.721803, -5.968360, -4.337545, -5.172313, -6.268079, -6.898759, -6.348736, -6.423297, -5.014803, -6.607756, -5.355342, -4.884644, -5.268880, -5.659874, -5.251978, -5.796886, -4.943018, -6.607006, -5.952243, -5.963673, -7.565757, -4.599250, -5.366478, -5.293888, -4.566069, -3.552203, -5.378748, -7.067131, -4.231747, -6.155218, -5.070765, -3.522218, -6.980723, -3.934149, -4.972664, -5.598188, -5.632028, -5.260419, -5.958496, -5.125384, -5.814215, -4.152896, -4.974555, -3.948608, -5.195210, -6.060369, -4.366217, -4.327205, -4.976892, -4.472779, -5.692506, -4.485808, -3.900676, -7.368172, -5.925450, -6.933650, -4.733595, -5.201658, -4.018743, -7.090242, -5.897417, -5.763227, -5.827868, -3.924644, -6.518828, -6.123027, -5.281942, -4.115694, -7.068128, -5.441278, -6.902668, -5.993096, -5.464522, -5.797259, -4.774227, -6.523911, -7.271535, -6.497963, -4.841367, -6.664202, -5.612349, -6.107048, -5.834808, -4.597341, -6.591704, -3.866430, -6.242155, -6.733284, -4.394802, -4.687393, -4.457868, -7.046097, -6.593961, -6.408178, -6.345420, -4.445039, -6.085354, -4.754437, -5.384123, -8.363619, -5.670746, -5.079826, -5.947822, -5.262039, -5.007044, -5.946759, -5.483349, -5.202089, -4.873659, -3.691242, -5.737459, -5.559763, -5.755637, -4.404953, -5.383431, -4.823447, -3.304142, -3.835217, -4.737324, -5.206160, -5.878990, -5.619675, -5.526130, -4.313054, -4.349379, -6.564728, -5.197470, -6.991091, -4.256110, -5.783530, -6.449573, -4.692833, -6.250875, -5.155166, -6.577905, -5.975004, -6.566460, -7.929525, -5.814095, -6.366544, -5.557046, -5.663303, -5.227295, -6.267327, -5.352663, -4.854496, -3.125329, -8.955860, -5.298782, -4.946069, -5.716282, -5.366894, -5.600664, -4.869111, -5.749219, -3.979135, -5.809901, -3.958715, -5.908685, -4.498666, -8.668694, -6.509491, -5.885261, -4.551803, -4.089137, -5.853442, -6.765112, -4.983791, -7.571599, -5.121455, -7.087692, -5.406161, -5.915366, -4.468776, -4.924887, -4.285957, -6.160033, -5.510470, -5.195872, -4.571730, -5.474514, -5.650360, -4.251760, -8.531182</min>
+			<max>2.864549, 3.305789, 3.834514, 3.850727, 3.416177, 5.284570, 4.597439, 4.505601, 5.016674, 5.162250, 3.066814, 3.897890, 3.449585, 3.397507, 4.955906, 4.010331, 2.858207, 4.274041, 3.725791, 4.159518, 4.356575, 3.211013, 4.380659, 4.108196, 2.767990, 5.965384, 4.130369, 4.465120, 5.021241, 5.595975, 5.107683, 3.320534, 3.782717, 4.684886, 3.288645, 4.786982, 3.456155, 3.983606, 3.741370, 6.153299, 5.562883, 2.943881, 4.725811, 5.292151, 4.981597, 4.771518, 4.566205, 5.332974, 5.200471, 5.148869, 4.875903, 2.771624, 4.507821, 5.068581, 4.151824, 3.872771, 3.981746, 3.508514, 3.832290, 6.155797, 4.575203, 3.834283, 4.597250, 5.035902, 5.044904, 5.341528, 5.411108, 4.215319, 4.038736, 5.433553, 2.611667, 5.092229, 2.689750, 3.433459, 3.313416, 5.094749, 3.566551, 4.842410, 3.069505, 3.847950, 4.730809, 5.975523, 5.948890, 3.397961, 3.214950, 4.989653, 5.128488, 3.945630, 3.916955, 6.202773, 3.732270, 6.038722, 4.918875, 5.687471, 4.851026, 3.732373, 5.885686, 3.175582, 4.770427, 4.597475, 5.541191, 3.442211, 3.651875, 2.621218, 6.062042, 4.099086, 3.670334, 4.157531, 4.631586, 5.616665, 4.754236, 5.913490, 4.897092, 2.034069, 4.454484, 2.664523, 6.152101, 4.570939, 3.113236, 3.697575, 4.447790, 4.515086, 4.157926, 3.523573, 3.652921, 4.245803, 3.921436, 5.460369, 4.348967, 4.203980, 3.818780, 5.218026, 4.572354, 4.724558, 4.042556, 3.277300, 4.791745, 3.568868, 5.450731, 3.852993, 3.286202, 3.960809, 6.770409, 5.099682, 4.008964, 4.320815, 3.079618, 4.297011, 4.576747, 4.777676, 5.060984, 4.953815, 3.977538, 4.198297, 4.927130, 5.922796, 4.629085, 4.656479, 5.541792, 4.130484, 3.619480, 4.097237, 3.964195, 4.209394, 6.331825, 3.650338, 6.415916, 4.310509, 4.535913, 4.546193, 4.274684, 7.454996, 3.876837, 5.211610, 3.294450, 4.237837, 5.089139, 6.130929, 5.560916, 2.960375, 4.141056, 4.381753, 4.163669, 3.396878, 4.173899, 3.961438, 4.160089, 4.876461, 2.660667, 4.187272, 5.983314, 3.172292, 4.633545, 3.948097, 4.398770, 3.149764, 5.278218, 4.971522, 4.053371, 4.074227, 2.948681, 6.954165, 4.358558, 3.695606, 4.397309, 4.017178, 4.188006, 3.420026, 3.695508, 4.637748, 3.850672, 3.845946, 3.353826, 5.455497, 3.579093, 4.209070, 3.890845, 5.515050, 2.829517, 5.328650, 3.196935, 4.249004, 6.060454, 4.061442, 5.539971, 4.254493, 4.415194, 4.747028, 3.574255, 5.078584, 5.255661, 3.406594, 5.859326, 4.903224, 5.526741, 4.454535, 4.483987, 6.827746, 3.420243, 3.395130, 5.137074, 4.725289, 5.626911, 3.767843, 4.768865, 3.806798, 5.157672, 4.638165, 4.031403, 3.900133, 5.209185, 5.813344, 3.650028, 4.032060, 4.815924, 4.758331</max>
+		</layer>
+		<layer>
+			<name>fire2_small/conv_reduce</name>
+			<min>-7.033186, -5.585050, -7.236948, -3.923868, -4.134764, -5.366664, -2.495925, -2.490883, -5.543911, -4.531305, -5.884900, -5.843988, -4.662294, -2.272559, -5.155734, -7.057880, -5.790150, -6.709232, -6.832105, -6.655184, -4.836473, -4.205607, -6.443334, -8.432186, -6.582706, -3.117406, -4.705588, -4.408007, -3.593422, -5.574273, -5.178615, -5.377653, -4.978853, -7.067551, -7.464613, -4.199809, -5.967857, -4.682354, -6.972360, -5.360732, -5.121995, -6.717738, -4.363950, -6.818025, -6.309582, -5.265287, -7.079070, -4.030674, -4.031139, -6.091396, -5.975820, -7.467982, -3.434968, -3.961778, -6.048062, -3.930773, -6.129235, -3.644375, -4.295243, -3.520731, -4.369848, -3.384214, -4.374734, -5.309486</min>
+			<max>3.732098, 4.955292, 6.117949, 5.260479, 4.673537, 5.336829, 4.541852, 5.425599, 6.205158, 8.179787, 6.699817, 8.423431, 7.057377, 6.853320, 5.148879, 5.958453, 3.897610, 5.488249, 6.128031, 7.819466, 5.314448, 7.277675, 4.495944, 6.143198, 5.017974, 8.314087, 6.288162, 6.238790, 4.755914, 6.722840, 5.252749, 5.334902, 5.447050, 3.602523, 6.732632, 4.325460, 4.663175, 6.365307, 6.045544, 6.860916, 6.846447, 5.561424, 8.137824, 4.707432, 4.270581, 3.299967, 5.952518, 4.496327, 6.150075, 6.976389, 3.109104, 3.518111, 6.156248, 7.244344, 4.671160, 4.882079, 4.424466, 8.419788, 5.886805, 8.293507, 5.983037, 6.615903, 5.167323, 5.186360</max>
+		</layer>
+		<layer>
+			<name>fire2_small/relu_conv_1x3</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>7.543250, 5.685919, 5.571259, 6.159765, 4.946389, 5.994325, 5.979223, 5.221121, 5.421602, 4.830872, 4.970909, 6.824202, 4.754390, 4.378588, 5.899417, 6.984755, 6.424849, 3.989743, 5.844888, 5.204987, 5.515413, 5.654727, 5.666178, 5.941490, 6.009606, 4.572641, 5.144457, 4.970737, 7.469104, 5.685948, 4.991958, 5.938211, 4.179103, 4.385413, 4.467889, 6.069292, 6.256787, 3.839530, 4.951977, 5.706465, 5.560437, 6.201326, 5.544044, 6.601505, 5.448153, 5.595945, 6.328124, 6.757728, 5.024930, 4.989180, 4.523674, 4.613168, 5.627579, 5.282365, 6.987792, 4.983933, 5.956266, 6.186394, 5.410151, 4.709256, 5.730506, 4.333102, 5.391086, 6.527787</max>
+		</layer>
+		<layer>
+			<name>fire2_small/relu_conv_3x1</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>4.973233, 6.596076, 5.251996, 5.365886, 5.646044, 6.911343, 5.717467, 5.676366, 4.451376, 6.859503, 4.082691, 7.589256, 4.064390, 3.868915, 5.991147, 6.490387, 3.837931, 4.475589, 6.617901, 5.246351, 6.220881, 6.962050, 6.162057, 4.212463, 5.654096, 7.971489, 4.199929, 5.102161, 5.298774, 6.220940, 4.832434, 7.023307, 4.928368, 4.016806, 5.691723, 6.734140, 5.292363, 4.941484, 4.894709, 6.652419, 6.798979, 4.924473, 5.386014, 5.285189, 5.499180, 6.396723, 6.662220, 3.814257, 6.031660, 4.580714, 3.345694, 5.167852, 8.806727, 5.407187, 5.637810, 3.989860, 5.504767, 5.665143, 3.062729, 4.679807, 4.772268, 6.245214, 5.884959, 4.326928</max>
+		</layer>
+		<layer>
+			<name>fire2_small/relu_conv_expand</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>2.864549, 3.305789, 3.834514, 3.850727, 3.416177, 5.284570, 4.597439, 4.505601, 5.016674, 5.162250, 3.066814, 3.897890, 3.449585, 3.397507, 4.955906, 4.010331, 2.858207, 4.274041, 3.725791, 4.159518, 4.356575, 3.211013, 4.380659, 4.108196, 2.767990, 5.965384, 4.130369, 4.465120, 5.021241, 5.595975, 5.107683, 3.320534, 3.782717, 4.684886, 3.288645, 4.786982, 3.456155, 3.983606, 3.741370, 6.153299, 5.562883, 2.943881, 4.725811, 5.292151, 4.981597, 4.771518, 4.566205, 5.332974, 5.200471, 5.148869, 4.875903, 2.771624, 4.507821, 5.068581, 4.151824, 3.872771, 3.981746, 3.508514, 3.832290, 6.155797, 4.575203, 3.834283, 4.597250, 5.035902, 5.044904, 5.341528, 5.411108, 4.215319, 4.038736, 5.433553, 2.611667, 5.092229, 2.689750, 3.433459, 3.313416, 5.094749, 3.566551, 4.842410, 3.069505, 3.847950, 4.730809, 5.975523, 5.948890, 3.397961, 3.214950, 4.989653, 5.128488, 3.945630, 3.916955, 6.202773, 3.732270, 6.038722, 4.918875, 5.687471, 4.851026, 3.732373, 5.885686, 3.175582, 4.770427, 4.597475, 5.541191, 3.442211, 3.651875, 2.621218, 6.062042, 4.099086, 3.670334, 4.157531, 4.631586, 5.616665, 4.754236, 5.913490, 4.897092, 2.034069, 4.454484, 2.664523, 6.152101, 4.570939, 3.113236, 3.697575, 4.447790, 4.515086, 4.157926, 3.523573, 3.652921, 4.245803, 3.921436, 5.460369, 4.348967, 4.203980, 3.818780, 5.218026, 4.572354, 4.724558, 4.042556, 3.277300, 4.791745, 3.568868, 5.450731, 3.852993, 3.286202, 3.960809, 6.770409, 5.099682, 4.008964, 4.320815, 3.079618, 4.297011, 4.576747, 4.777676, 5.060984, 4.953815, 3.977538, 4.198297, 4.927130, 5.922796, 4.629085, 4.656479, 5.541792, 4.130484, 3.619480, 4.097237, 3.964195, 4.209394, 6.331825, 3.650338, 6.415916, 4.310509, 4.535913, 4.546193, 4.274684, 7.454996, 3.876837, 5.211610, 3.294450, 4.237837, 5.089139, 6.130929, 5.560916, 2.960375, 4.141056, 4.381753, 4.163669, 3.396878, 4.173899, 3.961438, 4.160089, 4.876461, 2.660667, 4.187272, 5.983314, 3.172292, 4.633545, 3.948097, 4.398770, 3.149764, 5.278218, 4.971522, 4.053371, 4.074227, 2.948681, 6.954165, 4.358558, 3.695606, 4.397309, 4.017178, 4.188006, 3.420026, 3.695508, 4.637748, 3.850672, 3.845946, 3.353826, 5.455497, 3.579093, 4.209070, 3.890845, 5.515050, 2.829517, 5.328650, 3.196935, 4.249004, 6.060454, 4.061442, 5.539971, 4.254493, 4.415194, 4.747028, 3.574255, 5.078584, 5.255661, 3.406594, 5.859326, 4.903224, 5.526741, 4.454535, 4.483987, 6.827746, 3.420243, 3.395130, 5.137074, 4.725289, 5.626911, 3.767843, 4.768865, 3.806798, 5.157672, 4.638165, 4.031403, 3.900133, 5.209185, 5.813344, 3.650028, 4.032060, 4.815924, 4.758331</max>
+		</layer>
+		<layer>
+			<name>fire2_small/relu_conv_reduce</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>3.732098, 4.955292, 6.117949, 5.260479, 4.673537, 5.336829, 4.541852, 5.425599, 6.205158, 8.179787, 6.699817, 8.423431, 7.057377, 6.853320, 5.148879, 5.958453, 3.897610, 5.488249, 6.128031, 7.819466, 5.314448, 7.277675, 4.495944, 6.143198, 5.017974, 8.314087, 6.288162, 6.238790, 4.755914, 6.722840, 5.252749, 5.334902, 5.447050, 3.602523, 6.732632, 4.325460, 4.663175, 6.365307, 6.045544, 6.860916, 6.846447, 5.561424, 8.137824, 4.707432, 4.270581, 3.299967, 5.952518, 4.496327, 6.150075, 6.976389, 3.109104, 3.518111, 6.156248, 7.244344, 4.671160, 4.882079, 4.424466, 8.419788, 5.886805, 8.293507, 5.983037, 6.615903, 5.167323, 5.186360</max>
+		</layer>
+		<layer>
+			<name>fire3_small/conv_1x3</name>
+			<min>-4.790069, -6.119365, -5.260579, -5.447530, -4.965068, -5.958347, -5.188361, -4.813523, -5.328527, -5.557152, -3.640941, -4.504602, -4.660054, -4.515448, -4.271315, -6.298761, -4.863607, -5.139924, -4.182478, -6.036012, -4.285896, -4.899803, -4.930604, -4.396507, -4.426662, -4.006906, -4.951336, -6.001823, -5.438063, -5.264449, -6.637325, -6.732448, -6.104704, -11.120041, -5.436082, -4.133975, -3.855255, -5.524565, -6.499313, -6.787607, -5.343829, -6.303658, -4.673086, -7.283710, -4.422556, -5.715724, -3.774511, -5.272744, -4.125025, -9.076372, -3.271524, -4.720132, -6.276122, -5.275025, -6.978442, -4.247548, -4.300671, -5.498927, -5.009260, -5.228287, -3.820535, -5.073801, -6.167264, -4.724825</min>
+			<max>4.664896, 5.592460, 6.631219, 4.905349, 5.561656, 3.517346, 5.080871, 5.865795, 6.553855, 5.678395, 3.208747, 4.852897, 6.035892, 4.733191, 4.255435, 8.503399, 4.788963, 5.249261, 5.753719, 5.378710, 4.064186, 3.710577, 6.803576, 6.903634, 4.797798, 2.932241, 5.442729, 5.258528, 5.765139, 5.432954, 6.367810, 5.691608, 3.912566, 6.819052, 4.671956, 4.717265, 5.017994, 3.428994, 4.686699, 4.353343, 4.762919, 3.387758, 3.034694, 5.505543, 4.425200, 4.549366, 4.084067, 4.012733, 3.532649, 13.075638, 6.519135, 5.257242, 4.154943, 3.870545, 4.410445, 3.106283, 4.282909, 4.283849, 4.539473, 5.422480, 5.663961, 5.262238, 4.511240, 5.416894</max>
+		</layer>
+		<layer>
+			<name>fire3_small/conv_3x1</name>
+			<min>-7.855793, -6.418082, -4.035097, -7.972469, -6.605530, -4.446276, -6.263921, -8.134998, -4.930127, -5.241234, -5.560092, -3.362321, -6.171241, -5.627870, -4.795103, -5.074260, -5.439664, -4.993265, -4.466594, -5.218287, -6.728428, -7.381590, -5.952415, -4.289837, -6.691537, -5.070468, -8.206430, -5.707149, -7.124898, -6.117688, -6.301548, -5.543906, -4.531896, -7.049547, -8.656808, -6.005466, -6.155217, -3.892585, -4.087650, -5.126979, -8.974119, -4.952344, -3.714138, -5.616028, -6.590456, -6.291376, -7.720345, -4.986567, -5.180634, -4.954388, -5.893552, -5.609112, -3.931737, -5.804890, -5.610764, -5.069453, -5.174514, -6.748576, -5.773907, -4.240993, -5.958969, -6.260069, -5.583006, -5.755841</min>
+			<max>6.031118, 6.041740, 6.440815, 5.664152, 5.211951, 5.416643, 5.403826, 4.036468, 5.301760, 4.492228, 5.467924, 5.345624, 5.480636, 5.405818, 4.281581, 4.825936, 9.157926, 5.276247, 4.547553, 7.498929, 4.606864, 6.379311, 5.782990, 5.428595, 4.635042, 5.660220, 5.024183, 5.084103, 5.716221, 5.327769, 4.148755, 5.960118, 5.355569, 5.474477, 10.092081, 5.539714, 5.190961, 5.250497, 4.541632, 5.163759, 5.434328, 6.792809, 3.797086, 3.882699, 5.877596, 5.110440, 6.366973, 6.183568, 5.082698, 6.419830, 5.018994, 4.352216, 4.878572, 4.717822, 6.655414, 7.336576, 6.274429, 6.773396, 4.366202, 3.808090, 5.203010, 6.789560, 4.400732, 4.782575</max>
+		</layer>
+		<layer>
+			<name>fire3_small/conv_expand</name>
+			<min>-5.602045, -6.501936, -6.598684, -5.295231, -8.288787, -6.387382, -5.234865, -8.997923, -5.796967, -5.521656, -5.828791, -4.648472, -5.581900, -4.838706, -5.886026, -5.225357, -6.354434, -6.998168, -5.578881, -4.689872, -8.151718, -6.401956, -5.812072, -8.542037, -5.883623, -5.784302, -6.866044, -7.098587, -5.755269, -5.640194, -5.078463, -6.815296, -6.084696, -7.114952, -6.422064, -5.683020, -6.561965, -7.422040, -7.315045, -5.760128, -5.795249, -5.916193, -5.197161, -4.745837, -6.624104, -6.198643, -6.049876, -6.979965, -5.401611, -6.599828, -6.481012, -7.018188, -5.882060, -4.689930, -6.156877, -5.901520, -5.609150, -6.022508, -5.418555, -5.847923, -5.410576, -7.627050, -6.177422, -9.003060, -5.956039, -5.674865, -6.358666, -6.086857, -5.450805, -6.524974, -5.765212, -5.862638, -6.281803, -4.333098, -6.517849, -4.783075, -4.970402, -5.646518, -5.316476, -5.654872, -5.809277, -6.218891, -6.537723, -7.293137, -7.649292, -7.786216, -4.611528, -6.266514, -5.437565, -4.366985, -5.850079, -7.805665, -5.450740, -5.939264, -5.678596, -5.699916, -7.670922, -5.748305, -6.216798, -6.312175, -5.917384, -5.165827, -7.692670, -7.133532, -6.345826, -4.664521, -6.164899, -6.940718, -8.349527, -7.277088, -5.963018, -6.132022, -7.316802, -6.343800, -6.029371, -7.190341, -5.611713, -4.890642, -6.230976, -7.248166, -5.513373, -5.960717, -5.755991, -6.586988, -5.812418, -6.158687, -4.827448, -5.668346, -7.978475, -5.791467, -7.362922, -5.570330, -7.895810, -7.521748, -6.314909, -5.593819, -5.287518, -7.560064, -6.344471, -7.570140, -6.463024, -5.112337, -6.521441, -6.384954, -6.571234, -5.662511, -8.163111, -5.180645, -6.998757, -6.712712, -8.322049, -5.610131, -6.357424, -7.490128, -6.747144, -6.405010, -6.065438, -5.756331, -5.547263, -4.893285, -6.295732, -6.859922, -7.996047, -6.267100, -6.107846, -5.163207, -6.383719, -5.319638, -7.060472, -7.794533, -7.684726, -7.051419, -6.969969, -6.162956, -4.505708, -6.771390, -5.629159, -8.513577, -5.059693, -6.772764, -5.204314, -5.479127, -6.362959, -6.161473, -4.201863, -4.524043, -5.185060, -5.203347, -5.330888, -4.964800, -5.520141, -7.904233, -4.715008, -5.944075, -5.502203, -4.941122, -7.095741, -6.455504, -4.406618, -5.665207, -6.311756, -4.752689, -5.896745, -5.622369, -6.108943, -6.515285, -5.658113, -7.220974, -5.343178, -5.910616, -3.419142, -5.971298, -6.045865, -4.564679, -5.573886, -5.609194, -6.016820, -7.047166, -4.104927, -6.721923, -7.249580, -7.105024, -5.996522, -6.362802, -5.153560, -6.057274, -5.856840, -3.994565, -3.373395, -5.982125, -7.381705, -5.786927, -5.505695, -9.959450, -5.938297, -5.825843, -5.198142, -6.055386, -4.944871, -5.829816, -6.265964, -6.632912, -8.289289, -5.448813, -6.563157, -7.426470, -6.228075, -7.137771, -5.934607, -7.369689, -7.217555, -5.283384, -6.004040, -6.942557, -6.875817, -5.972904</min>
+			<max>1.970956, 2.649264, 3.408743, 3.137589, 2.958670, 2.657271, 2.676678, 4.240185, 3.217791, 3.633129, 3.514187, 2.139259, 2.287114, 2.765462, 2.198908, 2.824456, 3.750568, 2.630037, 3.698701, 2.516537, 2.427853, 3.449387, 2.297057, 3.314567, 2.467256, 2.722014, 2.586813, 3.827435, 2.393776, 3.761373, 2.334836, 3.006800, 2.934697, 3.319285, 3.914959, 2.186330, 2.858403, 2.772604, 2.277460, 6.110528, 2.898127, 2.927000, 3.059016, 2.716934, 4.295767, 3.969600, 2.965792, 3.389279, 3.387016, 6.456882, 3.396579, 3.180605, 2.642660, 2.719341, 2.637860, 2.496051, 2.062375, 3.362303, 4.354087, 2.258622, 2.094082, 3.520059, 3.156053, 2.386480, 2.542849, 3.083751, 2.649673, 4.262485, 2.955932, 3.189408, 4.078083, 3.690786, 2.932194, 2.658411, 2.019284, 3.327727, 3.408839, 4.046902, 3.777021, 3.099926, 4.108177, 2.653094, 3.838848, 3.341709, 2.263811, 2.998240, 2.503523, 2.447244, 3.022219, 2.186318, 2.428994, 3.392353, 3.654473, 2.987883, 3.238687, 2.928379, 3.694735, 2.024143, 2.235588, 2.898588, 2.999276, 2.225342, 2.611780, 3.320295, 3.544908, 2.873418, 2.482784, 2.255114, 2.600600, 2.266001, 2.525812, 2.962559, 2.759550, 3.299976, 2.899457, 3.397549, 2.873386, 3.471211, 3.014385, 2.364378, 2.374660, 2.985160, 2.246963, 2.958298, 2.555099, 3.184724, 2.627731, 2.792574, 2.698415, 3.625504, 2.973091, 2.364829, 3.999721, 2.917072, 2.714926, 2.812016, 3.262601, 3.776073, 2.344209, 3.153676, 2.805200, 4.560806, 3.236308, 2.326356, 3.857411, 3.001548, 2.076998, 2.508968, 4.095207, 2.266403, 3.492834, 4.151066, 2.746388, 2.724524, 2.748298, 2.079870, 2.333473, 3.272465, 2.620280, 5.624653, 2.488638, 2.464355, 3.952281, 3.405763, 2.994758, 3.380999, 2.519488, 2.545265, 3.131955, 2.851845, 3.184640, 3.660890, 2.200469, 3.600605, 3.257398, 2.785921, 2.219135, 2.805739, 2.989901, 2.578561, 2.395418, 2.698127, 3.150618, 2.161979, 3.982720, 1.818555, 2.077716, 2.590754, 3.916404, 2.531053, 2.530728, 3.510959, 2.249001, 4.906641, 2.232769, 2.157891, 2.185751, 2.390430, 2.954998, 4.348503, 2.437521, 3.262479, 2.392974, 2.728548, 2.839120, 3.236525, 2.326204, 2.681087, 3.019120, 2.577913, 2.449524, 3.541046, 2.734525, 2.890272, 1.705791, 1.887564, 3.193969, 4.541297, 2.102776, 2.408932, 2.452561, 3.671188, 4.003846, 2.085268, 2.699283, 3.135945, 2.563090, 3.413527, 3.047337, 3.161409, 3.074955, 1.657134, 2.777069, 3.515390, 2.820854, 1.886494, 2.636851, 2.854607, 2.468583, 2.289470, 2.566783, 2.459088, 3.004532, 2.229739, 3.711741, 2.662669, 3.482549, 2.400760, 2.680269, 2.694005, 2.035224, 4.425968, 3.573358, 2.221748, 3.672242, 3.513887</max>
+		</layer>
+		<layer>
+			<name>fire3_small/conv_reduce</name>
+			<min>-5.894976, -4.788047, -4.757540, -4.339446, -5.445143, -5.743192, -4.071400, -5.547263, -6.179475, -4.974732, -4.546008, -4.179518, -5.975441, -4.459167, -5.217499, -5.343876, -5.936043, -4.252919, -4.895458, -6.138346, -4.662653, -6.152980, -4.966140, -5.405866, -5.231534, -5.662969, -6.205820, -5.640605, -5.751451, -4.492109, -5.633351, -8.144586, -5.404745, -7.625993, -4.129129, -6.586053, -3.976599, -5.642282, -5.015855, -4.077094, -4.932163, -6.141567, -6.802758, -4.822218, -6.318458, -5.165529, -4.730872, -6.176182, -4.743540, -4.923400, -3.932502, -4.856815, -5.407271, -5.084999, -5.078204, -5.616997, -5.186656, -3.964103, -3.887777, -5.117298, -4.392224, -7.773558, -4.394923, -6.200572</min>
+			<max>5.852683, 8.167122, 4.975791, 4.576293, 4.637294, 6.302922, 5.465322, 6.255042, 4.835149, 5.871189, 4.372943, 5.471392, 5.819376, 5.000452, 5.684947, 4.639952, 5.539532, 3.882109, 7.470242, 4.745508, 6.678512, 4.653634, 9.995176, 7.380009, 7.119308, 5.399328, 7.459195, 4.470420, 5.264671, 5.496462, 7.227015, 6.784461, 8.641570, 6.027920, 5.899749, 5.946342, 6.058120, 6.430082, 6.493596, 5.162743, 5.097170, 5.403329, 4.732792, 3.636684, 6.470953, 5.658257, 5.131653, 4.592886, 4.418269, 5.783269, 6.958858, 6.015730, 4.558897, 6.167903, 4.063250, 4.989637, 5.881411, 5.450350, 5.166304, 5.483166, 7.438267, 6.841725, 4.969901, 5.966476</max>
+		</layer>
+		<layer>
+			<name>fire3_small/relu_conv_1x3</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>4.664896, 5.592460, 6.631219, 4.905349, 5.561656, 3.517346, 5.080871, 5.865795, 6.553855, 5.678395, 3.208747, 4.852897, 6.035892, 4.733191, 4.255435, 8.503399, 4.788963, 5.249261, 5.753719, 5.378710, 4.064186, 3.710577, 6.803576, 6.903634, 4.797798, 2.932241, 5.442729, 5.258528, 5.765139, 5.432954, 6.367810, 5.691608, 3.912566, 6.819052, 4.671956, 4.717265, 5.017994, 3.428994, 4.686699, 4.353343, 4.762919, 3.387758, 3.034694, 5.505543, 4.425200, 4.549366, 4.084067, 4.012733, 3.532649, 13.075638, 6.519135, 5.257242, 4.154943, 3.870545, 4.410445, 3.106283, 4.282909, 4.283849, 4.539473, 5.422480, 5.663961, 5.262238, 4.511240, 5.416894</max>
+		</layer>
+		<layer>
+			<name>fire3_small/relu_conv_3x1</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>6.031118, 6.041740, 6.440815, 5.664152, 5.211951, 5.416643, 5.403826, 4.036468, 5.301760, 4.492228, 5.467924, 5.345624, 5.480636, 5.405818, 4.281581, 4.825936, 9.157926, 5.276247, 4.547553, 7.498929, 4.606864, 6.379311, 5.782990, 5.428595, 4.635042, 5.660220, 5.024183, 5.084103, 5.716221, 5.327769, 4.148755, 5.960118, 5.355569, 5.474477, 10.092081, 5.539714, 5.190961, 5.250497, 4.541632, 5.163759, 5.434328, 6.792809, 3.797086, 3.882699, 5.877596, 5.110440, 6.366973, 6.183568, 5.082698, 6.419830, 5.018994, 4.352216, 4.878572, 4.717822, 6.655414, 7.336576, 6.274429, 6.773396, 4.366202, 3.808090, 5.203010, 6.789560, 4.400732, 4.782575</max>
+		</layer>
+		<layer>
+			<name>fire3_small/relu_conv_expand</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>1.970956, 2.649264, 3.408743, 3.137589, 2.958670, 2.657271, 2.676678, 4.240185, 3.217791, 3.633129, 3.514187, 2.139259, 2.287114, 2.765462, 2.198908, 2.824456, 3.750568, 2.630037, 3.698701, 2.516537, 2.427853, 3.449387, 2.297057, 3.314567, 2.467256, 2.722014, 2.586813, 3.827435, 2.393776, 3.761373, 2.334836, 3.006800, 2.934697, 3.319285, 3.914959, 2.186330, 2.858403, 2.772604, 2.277460, 6.110528, 2.898127, 2.927000, 3.059016, 2.716934, 4.295767, 3.969600, 2.965792, 3.389279, 3.387016, 6.456882, 3.396579, 3.180605, 2.642660, 2.719341, 2.637860, 2.496051, 2.062375, 3.362303, 4.354087, 2.258622, 2.094082, 3.520059, 3.156053, 2.386480, 2.542849, 3.083751, 2.649673, 4.262485, 2.955932, 3.189408, 4.078083, 3.690786, 2.932194, 2.658411, 2.019284, 3.327727, 3.408839, 4.046902, 3.777021, 3.099926, 4.108177, 2.653094, 3.838848, 3.341709, 2.263811, 2.998240, 2.503523, 2.447244, 3.022219, 2.186318, 2.428994, 3.392353, 3.654473, 2.987883, 3.238687, 2.928379, 3.694735, 2.024143, 2.235588, 2.898588, 2.999276, 2.225342, 2.611780, 3.320295, 3.544908, 2.873418, 2.482784, 2.255114, 2.600600, 2.266001, 2.525812, 2.962559, 2.759550, 3.299976, 2.899457, 3.397549, 2.873386, 3.471211, 3.014385, 2.364378, 2.374660, 2.985160, 2.246963, 2.958298, 2.555099, 3.184724, 2.627731, 2.792574, 2.698415, 3.625504, 2.973091, 2.364829, 3.999721, 2.917072, 2.714926, 2.812016, 3.262601, 3.776073, 2.344209, 3.153676, 2.805200, 4.560806, 3.236308, 2.326356, 3.857411, 3.001548, 2.076998, 2.508968, 4.095207, 2.266403, 3.492834, 4.151066, 2.746388, 2.724524, 2.748298, 2.079870, 2.333473, 3.272465, 2.620280, 5.624653, 2.488638, 2.464355, 3.952281, 3.405763, 2.994758, 3.380999, 2.519488, 2.545265, 3.131955, 2.851845, 3.184640, 3.660890, 2.200469, 3.600605, 3.257398, 2.785921, 2.219135, 2.805739, 2.989901, 2.578561, 2.395418, 2.698127, 3.150618, 2.161979, 3.982720, 1.818555, 2.077716, 2.590754, 3.916404, 2.531053, 2.530728, 3.510959, 2.249001, 4.906641, 2.232769, 2.157891, 2.185751, 2.390430, 2.954998, 4.348503, 2.437521, 3.262479, 2.392974, 2.728548, 2.839120, 3.236525, 2.326204, 2.681087, 3.019120, 2.577913, 2.449524, 3.541046, 2.734525, 2.890272, 1.705791, 1.887564, 3.193969, 4.541297, 2.102776, 2.408932, 2.452561, 3.671188, 4.003846, 2.085268, 2.699283, 3.135945, 2.563090, 3.413527, 3.047337, 3.161409, 3.074955, 1.657134, 2.777069, 3.515390, 2.820854, 1.886494, 2.636851, 2.854607, 2.468583, 2.289470, 2.566783, 2.459088, 3.004532, 2.229739, 3.711741, 2.662669, 3.482549, 2.400760, 2.680269, 2.694005, 2.035224, 4.425968, 3.573358, 2.221748, 3.672242, 3.513887</max>
+		</layer>
+		<layer>
+			<name>fire3_small/relu_conv_reduce</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>5.852683, 8.167122, 4.975791, 4.576293, 4.637294, 6.302922, 5.465322, 6.255042, 4.835149, 5.871189, 4.372943, 5.471392, 5.819376, 5.000452, 5.684947, 4.639952, 5.539532, 3.882109, 7.470242, 4.745508, 6.678512, 4.653634, 9.995176, 7.380009, 7.119308, 5.399328, 7.459195, 4.470420, 5.264671, 5.496462, 7.227015, 6.784461, 8.641570, 6.027920, 5.899749, 5.946342, 6.058120, 6.430082, 6.493596, 5.162743, 5.097170, 5.403329, 4.732792, 3.636684, 6.470953, 5.658257, 5.131653, 4.592886, 4.418269, 5.783269, 6.958858, 6.015730, 4.558897, 6.167903, 4.063250, 4.989637, 5.881411, 5.450350, 5.166304, 5.483166, 7.438267, 6.841725, 4.969901, 5.966476</max>
+		</layer>
+		<layer>
+			<name>p_result</name>
+			<min>-41.397449</min>
+			<max>36.036789</max>
+		</layer>
+		<layer>
+			<name>pattern</name>
+			<min>-2.164291, -2.322438, -2.939935, -1.880298, -2.417380, -1.536467, -1.459999, -2.091069, -4.624750, -1.992275, -1.929561, -3.820985, -1.676997, -2.494765, -2.496740, -1.189873, -1.554134, -1.758603, -1.806948, -3.155364, -1.692444, -1.731497, -2.087521, -0.903761, -4.814262, -2.058711, -1.658811, -2.247234, -2.806656, -1.768720, -1.768732, -2.438481, -2.586417, -2.316912, -1.959421, -2.251451, -1.997761, -2.420890, -2.244236, -2.986979, -3.863318, -1.554082, -2.010072, -4.355974, -2.457117, -1.936087, -1.515437, -3.074288, -7.644201, -2.739891, -2.301255, -2.064566, -1.708771, -3.269259, -3.865408, -8.558304, -4.668336, -2.643782, -11.622900, -2.387968, -2.202042, -7.701473, -2.077775, -1.723505, -1.885810, -1.699111, -2.653985, -2.157284, -2.337085, -2.774206, -2.370868, -1.757855, -2.009685, -1.337209, -1.935844, -1.504950, -1.733539, -2.659920, -1.419544, -18.437536, -1.432814, -2.158587, -2.523098, -2.611004, -1.978830, -6.043081, -2.168104, -1.905280, -3.036022, -5.520495, -2.285987, -2.484413, -2.462305, -2.655342, -2.288046, -2.955806, -2.755509, -2.646471, -2.250329, -1.944195, -6.513594, -2.427064, -1.978135, -1.549885, -2.173381, -1.963493, -5.631084, -1.861407, -2.362957, -3.530821, -2.755742, -2.661187, -2.112477, -1.919436, -1.727550, -2.313748, -3.503918, -1.953473, -3.347196, -4.033703, -2.359569, -1.810475, -20.136536, -5.273794, -1.790526, -2.893194, -3.898597, -2.527322</min>
+			<max>1.973957, 1.907075, 2.470774, 2.346050, 1.892179, 2.103940, 3.101889, 2.391822, 3.324807, 2.360310, 2.458409, 4.720315, 2.307455, 1.543017, 2.050123, 2.759767, 2.662726, 1.966998, 1.906292, 2.513080, 2.530412, 2.442268, 1.837290, 3.522989, 5.618392, 2.295695, 2.598321, 1.547830, 2.126009, 1.827938, 2.743852, 2.620197, 1.629652, 2.451391, 2.286746, 1.569831, 2.278537, 1.776305, 6.767633, 1.448632, 6.049217, 3.108225, 1.952767, 6.646216, 1.657884, 2.668585, 2.876164, 2.114922, 4.184802, 4.715750, 1.940477, 1.873191, 2.736711, 6.391356, 6.182351, 6.368523, 8.304164, 1.222004, 8.899870, 2.057858, 1.910267, 5.590934, 2.054396, 2.424060, 3.924848, 2.428838, 1.931470, 2.041834, 2.542528, 1.652045, 1.896322, 2.149406, 2.477596, 2.424298, 2.445069, 3.096138, 1.909275, 1.550933, 2.945718, -0.450515, 3.219730, 1.930188, 2.833231, 2.317399, 2.660112, 4.811356, 2.253391, 2.464487, 1.284108, 8.389408, 1.979117, 1.387664, 2.317030, 4.406434, 2.364188, 1.832222, 2.206244, 2.248951, 2.487833, 1.826148, 5.159889, 2.239402, 2.390488, 3.544082, 1.907790, 1.864492, 15.966466, 2.944020, 1.559697, 1.497924, 1.860446, 2.175959, 3.075139, 3.067989, 2.794094, 1.794835, 2.717713, 2.500749, 2.590245, 3.123442, 3.371797, 4.250096, -10.653842, 7.218647, 2.710034, 2.083210, 6.386056, 1.341905</max>
+		</layer>
+		<layer>
+			<name>pool1</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, 0.414810, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, 0.007816, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, 0.140082, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>5.140550, 6.906327, 5.276833, 0.957184, 5.733043, 5.586656, 8.175941, 6.286814, 8.848027, 6.496203, 7.498220, 4.525346, 2.485764, 4.095982, 4.914837, 8.924070, 3.778291, 6.060886, 3.215401, 2.488796, 5.393886, 5.549800, 6.997329, 5.838160, 4.913776, 10.716143, 4.362957, 5.940252, 12.772952, 7.220349, 3.261480, 10.059635, 6.651850, 2.950872, 11.091149, 6.742132, 3.650035, 8.587179, 2.763879, 4.277616, 11.581767, 2.239597, 5.699358, 5.432875, 1.784608, 5.386084, 4.380629, 6.994524, 4.748490, 3.422478, 6.135737, 2.664987, 6.745206, 2.574700, 6.564127, 8.968923, 2.608935, 8.266464, 5.904207, 9.063972, 6.550776, 7.109301, 7.309756, 8.931138</max>
+		</layer>
+		<layer>
+			<name>pool2</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>6.336308, 4.642532, 6.595642, 3.742797, 8.091406, 3.726863, 8.149952, 6.022142, 8.188844, 4.183142, 9.789543, 5.828625, 5.355117, 5.698557, 7.300335, 6.562860, 6.091546, 6.218506, 6.151478, 6.845715, 6.322960, 5.518674, 7.917527, 7.868219, 6.788667, 7.574995, 5.255313, 3.965923, 9.295394, 6.133234, 6.486980, 6.450157, 6.895561, 5.887733, 8.014068, 7.403666, 5.561379, 4.578154, 5.257075, 5.488817, 8.221608, 5.206055, 5.253898, 5.070620, 6.390105, 6.161047, 7.295952, 6.707243, 8.371967, 7.367469, 7.471734, 4.132164, 7.009287, 6.839469, 7.585324, 6.392080, 5.786315, 3.880344, 5.917636, 5.338875, 5.351772, 7.043650, 5.443910, 2.784368, 6.803580, 6.036033, 8.726698, 7.163081, 7.201141, 7.402784, 7.316999, 6.535029, 4.283328, 7.203880, 5.490251, 5.714152, 7.183372, 8.526775, 4.182202, 3.946326, 7.667301, 7.528315, 4.663139, 6.468657, 9.493517, 4.476044, 7.002403, 4.463255, 4.089437, 4.376685, 4.685530, 6.911233, 5.004527, 7.305326, 7.341395, 5.237681, 8.788555, 5.295693, 4.963021, 5.459127, 5.339744, 5.239004, 5.300593, 6.064887, 4.897575, 5.414970, 7.779529, 3.785195, 6.519820, 4.892653, 5.458430, 3.648134, 4.091211, 6.060548, 4.460238, 5.489353, 8.241743, 6.477386, 4.405165, 4.291198, 6.933552, 7.288836, 6.492459, 4.643635, 5.705637, 5.386655, 8.924078, 3.875231</max>
+		</layer>
+		<layer>
+			<name>pool3</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>1.970956, 2.649264, 3.408743, 3.137589, 2.958670, 2.657271, 2.676678, 4.240185, 3.217791, 3.633129, 3.514187, 2.139259, 2.287114, 2.765462, 2.198908, 2.824456, 3.750568, 2.630037, 3.698701, 2.516537, 2.427853, 3.449387, 2.297057, 3.314567, 2.467256, 2.722014, 2.586813, 3.827435, 2.393776, 3.761373, 2.334836, 3.006800, 2.934697, 3.319285, 3.914959, 2.186330, 2.858403, 2.772604, 2.277460, 6.110528, 2.898127, 2.927000, 3.059016, 2.716934, 4.295767, 3.969600, 2.965792, 3.389279, 3.387016, 6.456882, 3.396579, 3.180605, 2.642660, 2.719341, 2.637860, 2.496051, 2.062375, 3.362303, 4.354087, 2.258622, 2.094082, 3.520059, 3.156053, 2.386480, 2.542849, 3.083751, 2.649673, 4.262485, 2.955932, 3.189408, 4.078083, 3.690786, 2.932194, 2.658411, 2.019284, 3.327727, 3.408839, 4.046902, 3.777021, 3.099926, 4.108177, 2.653094, 3.838848, 3.341709, 2.263811, 2.998240, 2.503523, 2.447244, 3.022219, 2.186318, 2.428994, 3.392353, 3.654473, 2.987883, 3.238687, 2.928379, 3.694735, 2.024143, 2.235588, 2.898588, 2.999276, 2.225342, 2.611780, 3.320295, 3.544908, 2.873418, 2.482784, 2.255114, 2.600600, 2.266001, 2.525812, 2.962559, 2.759550, 3.299976, 2.899457, 3.397549, 2.873386, 3.471211, 3.014385, 2.364378, 2.374660, 2.985160, 2.246963, 2.958298, 2.555099, 3.184724, 2.627731, 2.792574, 2.698415, 3.625504, 2.973091, 2.364829, 3.999721, 2.917072, 2.714926, 2.812016, 3.262601, 3.776073, 2.344209, 3.153676, 2.805200, 4.560806, 3.236308, 2.326356, 3.857411, 3.001548, 2.076998, 2.508968, 4.095207, 2.266403, 3.492834, 4.151066, 2.746388, 2.724524, 2.748298, 2.079870, 2.333473, 3.272465, 2.620280, 5.624653, 2.488638, 2.464355, 3.952281, 3.405763, 2.994758, 3.380999, 2.519488, 2.545265, 3.131955, 2.851845, 3.184640, 3.660890, 2.200469, 3.600605, 3.257398, 2.785921, 2.219135, 2.805739, 2.989901, 2.578561, 2.395418, 2.698127, 3.150618, 2.161979, 3.982720, 1.818555, 2.077716, 2.590754, 3.916404, 2.531053, 2.530728, 3.510959, 2.249001, 4.906641, 2.232769, 2.157891, 2.185751, 2.390430, 2.954998, 4.348503, 2.437521, 3.262479, 2.392974, 2.728548, 2.839120, 3.236525, 2.326204, 2.681087, 3.019120, 2.577913, 2.449524, 3.541046, 2.734525, 2.890272, 1.705791, 1.887564, 3.193969, 4.541297, 2.102776, 2.408932, 2.452561, 3.671188, 4.003846, 2.085268, 2.699283, 3.135945, 2.563090, 3.413527, 3.047337, 3.161409, 3.074955, 1.657134, 2.777069, 3.515390, 2.820854, 1.886494, 2.636851, 2.854607, 2.468583, 2.289470, 2.566783, 2.459088, 3.004532, 2.229739, 3.711741, 2.662669, 3.482549, 2.400760, 2.680269, 2.694005, 2.035224, 4.425968, 3.573358, 2.221748, 3.672242, 3.513887</max>
+		</layer>
+		<layer>
+			<name>relu_conv1</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>5.140550, 6.906327, 5.276833, 0.957184, 5.733043, 5.586656, 8.175941, 6.286814, 8.848027, 6.496203, 7.498220, 4.525346, 2.485764, 4.095982, 4.914837, 8.924070, 3.778291, 6.060886, 3.215401, 2.488796, 5.393886, 5.549800, 6.997329, 5.838160, 4.913776, 10.716143, 4.362957, 5.940252, 12.772952, 7.220349, 3.261480, 10.059635, 6.651850, 2.950872, 11.091149, 6.742132, 3.650035, 8.587179, 2.763879, 4.277616, 11.581767, 2.239597, 5.699358, 5.432875, 1.784608, 5.386084, 4.380629, 6.994524, 4.748490, 3.422478, 6.135737, 2.664987, 6.745206, 2.574700, 6.564127, 8.968923, 2.608935, 8.266464, 5.904207, 9.063972, 6.550776, 7.109301, 7.309756, 8.931138</max>
+		</layer>
+		<layer>
+			<name>relu_conv2</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>3.533627, 1.520428, 1.768446, 1.684833, 2.749979, 5.308498, 2.331140, 5.487236, 1.511603, 1.964843, 1.915642, 1.491107, 2.992757, 1.487663, 1.747823, 3.148400, 1.861138, 2.924449, 1.432566, 1.571818, 2.184232, 1.661875, 1.730553, 2.604240, 1.946372, 3.301068, 2.609871, 1.417261, 1.880880, 1.578312, 2.446555, 1.791360, 2.557209, 1.480841, 2.283664, 2.067613, 1.490511, 1.779125, 3.012902, 1.368701, 1.604701, 9.146325, 8.803477, 2.144420, 1.577367, 1.565277, 1.509905, 5.703854, 2.934924, 3.214124, 1.591299, 1.505508, 1.578963, 1.591018, 1.669776, 7.689878, 1.579863, 2.693196, 1.441832, 4.359479, 1.641667, 1.514618, 3.306618, 1.604477, 3.616065, 5.487117, 2.756708, 1.192938, 2.990500, 1.935500, 1.695459, 1.210394, 1.790378, 1.757311, 1.640046, 1.583319, 2.043930, 1.999080, 7.384157, 2.250841, 3.200345, 2.963149, 1.516876, 2.527644, 3.839601, 1.661404, 4.726214, 3.388816, 2.452142, 3.777561, 1.612624, 1.513057, 2.660988, 3.594336, 10.441744, 1.867687, 1.491485, 3.439333, 1.956531, 3.654541, 2.734940, 1.937137, 1.368843, 1.654726, 2.078568, 1.568052, 1.464157, 1.841969, 3.584718, 2.201912, 1.831437, 3.377659, 1.950618, 2.077560, 1.864217, 3.569675, 1.858977, 1.970013, 1.421211, 2.099186, 1.627410, 3.537914, 2.125099, 1.458453, 1.499002, 1.566328, 1.646909, 1.916839</max>
+		</layer>
+		<layer>
+			<name>relu_conv3_w</name>
+			<min>-0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000, -0.000000</min>
+			<max>0.855657, 0.766961, 0.756185, 1.528155, 0.854354, 0.932086, 1.029030, 0.575236, 0.972730, 0.470022, 0.379686, 0.723382, 0.347712, 0.441611, 0.677222, 0.689676, 0.769033, 1.021330, 0.649142, 0.754034, 0.537246, 0.378477, 0.712899, 0.773065, 0.841390, 0.588859, 0.773883, 0.429433, 0.660656, 0.401921, 0.964962, 0.725484, 0.534352, 0.685903, 0.733133, 0.675480, 1.235986, 0.778130, 0.387331, 0.671349, 0.535089, 0.775442, 0.435745, 0.503931, 0.421145, 0.905714, 0.583734, 0.525443, 0.602540, 0.687023, 1.359369, 0.713756, 0.599450, 0.592625, 0.886287, 0.611502, 1.379877, 0.680164, 0.580513, 0.549156, 0.542006, 0.963146, 0.236212, 0.820801, 0.640409, 0.538405, 0.768144, 3.681136, 0.726153, 0.478617, 0.828447</max>
+		</layer>
+		<layer>
+			<name>reshape</name>
+			<min>-2.164291, -2.322438, -2.939935, -1.880298, -2.417380, -1.536467, -1.459999, -2.091069, -4.624750, -1.992275, -1.929561, -3.820985, -1.676997, -2.494765, -2.496740, -1.189873, -1.554134, -1.758603, -1.806948, -3.155364, -1.692444, -1.731497, -2.087521, -0.903761, -4.814262, -2.058711, -1.658811, -2.247234, -2.806656, -1.768720, -1.768732, -2.438481, -2.586417, -2.316912, -1.959421, -2.251451, -1.997761, -2.420890, -2.244236, -2.986979, -3.863318, -1.554082, -2.010072, -4.355974, -2.457117, -1.936087, -1.515437, -3.074288, -7.644201, -2.739891, -2.301255, -2.064566, -1.708771, -3.269259, -3.865408, -8.558304, -4.668336, -2.643782, -11.622900, -2.387968, -2.202042, -7.701473, -2.077775, -1.723505, -1.885810, -1.699111, -2.653985, -2.157284, -2.337085, -2.774206, -2.370868, -1.757855, -2.009685, -1.337209, -1.935844, -1.504950, -1.733539, -2.659920, -1.419544, -18.437536, -1.432814, -2.158587, -2.523098, -2.611004, -1.978830, -6.043081, -2.168104, -1.905280, -3.036022, -5.520495, -2.285987, -2.484413, -2.462305, -2.655342, -2.288046, -2.955806, -2.755509, -2.646471, -2.250329, -1.944195, -6.513594, -2.427064, -1.978135, -1.549885, -2.173381, -1.963493, -5.631084, -1.861407, -2.362957, -3.530821, -2.755742, -2.661187, -2.112477, -1.919436, -1.727550, -2.313748, -3.503918, -1.953473, -3.347196, -4.033703, -2.359569, -1.810475, -20.136536, -5.273794, -1.790526, -2.893194, -3.898597, -2.527322</min>
+			<max>1.973957, 1.907075, 2.470774, 2.346050, 1.892179, 2.103940, 3.101889, 2.391822, 3.324807, 2.360310, 2.458409, 4.720315, 2.307455, 1.543017, 2.050123, 2.759767, 2.662726, 1.966998, 1.906292, 2.513080, 2.530412, 2.442268, 1.837290, 3.522989, 5.618392, 2.295695, 2.598321, 1.547830, 2.126009, 1.827938, 2.743852, 2.620197, 1.629652, 2.451391, 2.286746, 1.569831, 2.278537, 1.776305, 6.767633, 1.448632, 6.049217, 3.108225, 1.952767, 6.646216, 1.657884, 2.668585, 2.876164, 2.114922, 4.184802, 4.715750, 1.940477, 1.873191, 2.736711, 6.391356, 6.182351, 6.368523, 8.304164, 1.222004, 8.899870, 2.057858, 1.910267, 5.590934, 2.054396, 2.424060, 3.924848, 2.428838, 1.931470, 2.041834, 2.542528, 1.652045, 1.896322, 2.149406, 2.477596, 2.424298, 2.445069, 3.096138, 1.909275, 1.550933, 2.945718, -0.450515, 3.219730, 1.930188, 2.833231, 2.317399, 2.660112, 4.811356, 2.253391, 2.464487, 1.284108, 8.389408, 1.979117, 1.387664, 2.317030, 4.406434, 2.364188, 1.832222, 2.206244, 2.248951, 2.487833, 1.826148, 5.159889, 2.239402, 2.390488, 3.544082, 1.907790, 1.864492, 15.966466, 2.944020, 1.559697, 1.497924, 1.860446, 2.175959, 3.075139, 3.067989, 2.794094, 1.794835, 2.717713, 2.500749, 2.590245, 3.123442, 3.371797, 4.250096, -10.653842, 7.218647, 2.710034, 2.083210, 6.386056, 1.341905</max>
+		</layer>
+		<layer>
+			<name>reshape2</name>
+			<min>-57.454914, -30.353979, -29.088137, -30.551266, -32.805084, -32.241386, -34.530781, -33.465702, -32.994240, -32.400047, -36.776390, -43.709621, -45.616848, -46.014542, -47.530106, -48.059540, -44.423229, -40.436394, -30.561455, -25.659637, -25.650158, -25.210276, -25.185234, -25.207420, -25.191877, -25.113094, -25.236599, -29.413177, -28.253977, -36.040043, -45.268494, -43.244812, -42.336529, -44.842960, -40.772896, -25.521669, -26.240192, -30.561455, -37.530556, -34.546795, -30.561455, -35.069019, -39.145325, -43.667919, -44.989761, -41.234756, -37.305183, -28.401552, -30.389950, -34.869610, -33.932755, -27.972445, -27.574400, -37.047302, -38.702816, -41.741100, -43.471432, -42.957851, -39.840015, -33.091755, -34.226234, -36.272873, -26.240192, -28.208031, -34.724064, -41.059814, -39.987926, -40.435493, -39.038208, -40.122520, -40.701336, -35.744717, -34.431000, -33.565273, -27.758978, -31.002953, -38.179295, -38.703583, -39.418262, -37.794937, -39.789043, -37.024765, -38.515835, -37.328167, -35.342468, -33.648804, -32.056107, -34.406883</min>
+			<max>15.325336, 27.677662, 33.103256, 34.147636, 33.292255, 33.441074, 33.132416, 32.623062, 32.027382, 34.138908, 34.564465, 35.535797, 35.964333, 38.161411, 37.087223, 35.826847, 31.435474, 31.651987, 29.826982, 29.971840, 30.003860, 30.249138, 29.869337, 29.769737, 29.631735, 29.553495, 30.379442, 31.731520, 34.191223, 38.926117, 39.724247, 39.362675, 40.493164, 29.977859, 29.645144, 30.203863, 32.783287, 37.236591, 30.040668, 29.865124, 36.038979, 37.014816, 39.827805, 41.254807, 37.250301, 36.529938, 29.917639, 30.472530, 33.456604, 30.584808, 29.865124, 30.157024, 34.233952, 39.780643, 38.767483, 40.075417, 37.722183, 34.805164, 30.883116, 35.459778, 34.609699, 29.826982, 29.793159, 32.724289, 36.960190, 37.583153, 38.924152, 37.188938, 38.342834, 38.497086, 33.921833, 31.537184, 30.584808, 29.723152, 30.109659, 36.988567, 37.752350, 38.497723, 37.809196, 36.868187, 35.820469, 39.910309, 37.735683, 32.119579, 29.865124, 29.512964, 28.519661, 21.991598</max>
+		</layer>
+		<layer>
+			<name>result</name>
+			<min>-41.644932, -44.600796, -46.179295, -43.944778, -42.306038, -40.712097, -41.835472, -45.041821, -37.323212, -40.309586, -35.939941, -32.631870, -35.287281, -33.644333, -39.118244, -35.138741, -42.238155, -32.674614, -32.788937, -31.779230, -36.402847, -36.461906, -58.545822, -40.113583, -33.873703, -31.925543, -41.219742, -32.470100, -33.618900, -42.264030, -55.770748, -40.554966, -33.189728, -36.115887, -38.923977, -41.699390, -36.191444, -40.235958, -35.675503, -29.666470, -33.025509, -39.858501, -34.296219, -40.395908, -30.815184, -32.803528, -33.553886, -40.092205, -34.722172, -30.917448, -33.268478, -33.298870, -47.486805, -44.683372, -31.058222, -37.114330, -30.651253, -29.490870, -35.752586, -30.894745, -28.656200, -32.594482, -35.005196, -35.469883, -35.652454, -35.148415, -21.467415, -37.318748, -34.549084, -39.077351, -37.401516</min>
+			<max>15.533845, 17.302969, 21.459234, 17.682491, 23.947647, 18.318750, 19.018501, 17.983984, 18.582588, 21.756517, -2.234678, 12.430237, -1.269922, -1.431795, -1.010079, 2.170548, -2.447957, -0.050200, -1.952748, 7.639949, -2.424635, -1.318079, -3.027209, -2.371248, -1.035912, -2.375905, 4.332742, -0.960637, -0.357864, 5.477232, -2.485907, -2.377583, -0.249239, 0.041166, 6.562323, -0.510469, 0.104024, 7.446313, -1.604115, -1.892316, 2.613393, -1.048291, 1.263814, 3.160882, 20.242590, 15.900232, 17.618910, 15.177604, 15.817571, 17.417732, 18.374437, 18.792902, -0.284495, 18.829277, 16.893110, 10.237208, 7.588197, 6.655029, 5.224572, 7.383924, 6.548550, 8.440463, 8.939921, 8.073605, 14.225674, 6.850442, 16.586523, 17.235098, 6.431267, 17.330004, 45.684624</max>
+		</layer>
+		<layer>
+			<name>seq_ind</name>
+			<min>1.000000</min>
+			<max>1.000000</max>
+		</layer>
+		<layer>
+			<name>tile</name>
+			<min>-2.164291, -2.322438, -2.939935, -1.880298, -2.417380, -1.536467, -1.459999, -2.091069, -4.624750, -1.992275, -1.929561, -3.820985, -1.676997, -2.494765, -2.496740, -1.189873, -1.554134, -1.758603, -1.806948, -3.155364, -1.692444, -1.731497, -2.087521, -0.903761, -4.814262, -2.058711, -1.658811, -2.247234, -2.806656, -1.768720, -1.768732, -2.438481, -2.586417, -2.316912, -1.959421, -2.251451, -1.997761, -2.420890, -2.244236, -2.986979, -3.863318, -1.554082, -2.010072, -4.355974, -2.457117, -1.936087, -1.515437, -3.074288, -7.644201, -2.739891, -2.301255, -2.064566, -1.708771, -3.269259, -3.865408, -8.558304, -4.668336, -2.643782, -11.622900, -2.387968, -2.202042, -7.701473, -2.077775, -1.723505, -1.885810, -1.699111, -2.653985, -2.157284, -2.337085, -2.774206, -2.370868, -1.757855, -2.009685, -1.337209, -1.935844, -1.504950, -1.733539, -2.659920, -1.419544, -18.437536, -1.432814, -2.158587, -2.523098, -2.611004, -1.978830, -6.043081, -2.168104, -1.905280, -3.036022, -5.520495, -2.285987, -2.484413, -2.462305, -2.655342, -2.288046, -2.955806, -2.755509, -2.646471, -2.250329, -1.944195, -6.513594, -2.427064, -1.978135, -1.549885, -2.173381, -1.963493, -5.631084, -1.861407, -2.362957, -3.530821, -2.755742, -2.661187, -2.112477, -1.919436, -1.727550, -2.313748, -3.503918, -1.953473, -3.347196, -4.033703, -2.359569, -1.810475, -20.136536, -5.273794, -1.790526, -2.893194, -3.898597, -2.527322</min>
+			<max>1.973957, 1.907075, 2.470774, 2.346050, 1.892179, 2.103940, 3.101889, 2.391822, 3.324807, 2.360310, 2.458409, 4.720315, 2.307455, 1.543017, 2.050123, 2.759767, 2.662726, 1.966998, 1.906292, 2.513080, 2.530412, 2.442268, 1.837290, 3.522989, 5.618392, 2.295695, 2.598321, 1.547830, 2.126009, 1.827938, 2.743852, 2.620197, 1.629652, 2.451391, 2.286746, 1.569831, 2.278537, 1.776305, 6.767633, 1.448632, 6.049217, 3.108225, 1.952767, 6.646216, 1.657884, 2.668585, 2.876164, 2.114922, 4.184802, 4.715750, 1.940477, 1.873191, 2.736711, 6.391356, 6.182351, 6.368523, 8.304164, 1.222004, 8.899870, 2.057858, 1.910267, 5.590934, 2.054396, 2.424060, 3.924848, 2.428838, 1.931470, 2.041834, 2.542528, 1.652045, 1.896322, 2.149406, 2.477596, 2.424298, 2.445069, 3.096138, 1.909275, 1.550933, 2.945718, -0.450515, 3.219730, 1.930188, 2.833231, 2.317399, 2.660112, 4.811356, 2.253391, 2.464487, 1.284108, 8.389408, 1.979117, 1.387664, 2.317030, 4.406434, 2.364188, 1.832222, 2.206244, 2.248951, 2.487833, 1.826148, 5.159889, 2.239402, 2.390488, 3.544082, 1.907790, 1.864492, 15.966466, 2.944020, 1.559697, 1.497924, 1.860446, 2.175959, 3.075139, 3.067989, 2.794094, 1.794835, 2.717713, 2.500749, 2.590245, 3.123442, 3.371797, 4.250096, -10.653842, 7.218647, 2.710034, 2.083210, 6.386056, 1.341905</max>
+		</layer>
+	</statistics>
+</net>
