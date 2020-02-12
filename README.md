@@ -11,4 +11,6 @@ linfer.py -> inference helper file for lpr
 
 other images are kept for future reference
 
+```
 car_image -> vpd.py -> output blob of detected plate -> lpr.py -> output of plate number
+```
