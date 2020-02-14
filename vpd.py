@@ -75,7 +75,9 @@ def perform_inference(args):
     inference_network.sync_inference(preprocessed_image)
     output = inference_network.extract_output()
     
-    out = output['DetectionOutput_'][0, 0, 2]
+    out = output['DetectionOutput_']
+    out = [k for i in out for j in i for k in j if(k[2]>0.5 and k[1]!=1)]
+    out = np.asarray(out).flatten()
     print(out)
 
     frame = preprocessed_image
