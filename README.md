@@ -5,6 +5,7 @@ License Plate recognition from images of Chinese vehicles using [pre-trained mod
 ![](https://github.com/ada-nai/UIEA-LPR/blob/master/test5.jpg) | 
 |:--:| 
 |*Input - License plate*|
+
 ![](https://github.com/ada-nai/UIEA-LPR/blob/master/op_test5.png) | 
 |:--:| 
 |*Output - Recognized License Plate Number*|
