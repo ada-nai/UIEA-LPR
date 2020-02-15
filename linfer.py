@@ -44,20 +44,25 @@ class Network:
         self.exec_network = self.plugin.load_network(network, device)
 
         # Get the input layer
-        self.input_blob = next(iter(network.inputs))
-        print(type(network.inputs))
-        print( network.inputs)
-        #print('seq_ind:', network.inputs['seq_ind'])
+        bl_iter = iter(network.inputs)
+        self.input_blob_1 = next(bl_iter)
+        self.input_blob_2 = next(bl_iter)
+        
+        # print('network input type: {}'.format(type(network.inputs)))
+        # print('input blob type: {}'.format(type(self.input_blob)))
+        # print('network inputs:{} {}'.format(self.input_blob_1, self.input_blob_2))
+        # print('seq_ind:', network.inputs['seq_ind'])
 
         # Return the input shape (to determine preprocessing)
-        return network.inputs[self.input_blob].shape
+        return network.inputs[self.input_blob_1].shape
 
 
-    def sync_inference(self, image):
+    def sync_inference(self, data, seq_ind):
         '''
         Makes a synchronous inference request, given an input image.
         '''
-        self.exec_network.infer({self.input_blob:image})
+        #self.exec_network.infer({self.input_blob['data']:data, self.input_blob['seq_ind']:seq_ind})
+        self.exec_network.infer({self.input_blob_1:data, self.input_blob_2:seq_ind})
         return  
 
 
