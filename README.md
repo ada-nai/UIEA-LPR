@@ -1,7 +1,7 @@
 # UIEA-LPR
 \
 License Plate recognition from images of Chinese vehicles using [pre-trained models](https://software.intel.com/en-us/openvino-toolkit/documentation/pretrained-models) provided under the [Intel® Distribution of OpenVINO™ Toolkit](https://software.intel.com/en-us/openvino-toolkit)  
-
+\
 ![](https://github.com/ada-nai/UIEA-LPR/blob/master/test5.jpg) | 
 |:--:| 
 |*Input - License plate*|
@@ -9,8 +9,7 @@ License Plate recognition from images of Chinese vehicles using [pre-trained mod
 ![](https://github.com/ada-nai/UIEA-LPR/blob/master/op_test5.png) | 
 |:--:| 
 |*Output - Recognized License Plate Number*|
-
-
+\
 Following pre-trained models were used for the application:
 
   1) [vehicle-license-plate-detection-barrier-0106](https://docs.openvinotoolkit.org/2019_R1/_vehicle_license_plate_detection_barrier_0106_description_vehicle_license_plate_detection_barrier_0106.html)
