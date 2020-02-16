@@ -5,6 +5,21 @@ import numpy as np
 from linfer import Network
 from encoding import get_encoding
 
+
+def preprocessing(input_image, height, width):
+	'''
+	Given an input image, height and width:
+	- Resize to width and height
+	- Transpose the final "channel" dimension to be first
+	- Reshape the image to add a "batch" of 1 at the start 
+	'''
+	image = np.copy(input_image)
+	image = cv2.resize(image, (width, height))
+	image = image.transpose((2,0,1))
+	image = image.reshape(1, 3, height, width)
+
+	return image
+
 def decode_output(out, encoding):
 
 	'''
@@ -33,7 +48,7 @@ def perform_inference(plate_image,args):
 	# Read the input image
 	image = plate_image.copy()
 	# Preprocess the input image
-	# preprocessed_image = preprocessing(image, h, w)
+	preprocessed_image = preprocessing(image, h, w)
 	print('done with preprocessing...')
 	# Create the second input for the lp_recognition model
 	# of the form [0,1,...,1] of shape (88, 1)
@@ -41,7 +56,7 @@ def perform_inference(plate_image,args):
 	seq_ind[0] = 0
 	seq_ind = seq_ind.reshape(88, 1)
 	# Perform synchronous inference on the image
-	inference_network.sync_inference(plate_image, seq_ind)
+	inference_network.sync_inference(preprocessed_image, seq_ind)
 	# Obtain the output of the inference request
 	gen_output = inference_network.extract_output()
 	output = gen_output['decode']
