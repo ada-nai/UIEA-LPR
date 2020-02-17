@@ -40,18 +40,28 @@ def perform_inference(args):
     xmax = int(out[5] * frame.shape[0])
     ymax = int(out[6] * frame.shape[1])
     
+    pX1 = xmin/300
+    pY1 = ymin/300
+    pX2 = xmax/300
+    pY2 = ymax/300
+    
+    unX1 = int(image.shape[1]*pX1)
+    unY1 = int(image.shape[0]*pY1)
+    unX2 = int(image.shape[1]*pX2)
+    unY2 = int(image.shape[0]*pY2)
 
-    cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), color=(0, 255, 0))
+
+    cv2.rectangle(image, (unX1, unY1), (unX2, unY2), color=(0, 255, 0))
 
     # cv2.imwrite("CAR-PLATE-output.jpg", frame)
     # clone = image.copy()
     # clone = cv2.resize(clone, (300, 300))
 
-    extracted = frame[ymin:ymax, xmin:xmax]
+    extracted = image[unY1:unY2, unX1:unX2]
     print('extracted shape:', extracted.shape)
     
     cv2.imwrite('extracted_lp.jpg', extracted)
-    mod = cv2.resize(extracted,(300, 300))
+    #mod = cv2.resize(extracted,(300, 300))
     print('done with detection and extraction')
-    return mod
+    return extracted
 
