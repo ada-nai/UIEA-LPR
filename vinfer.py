@@ -5,7 +5,7 @@ from openvino.inference_engine import IENetwork, IECore
  
 class Network:
     '''
-   Load and store information for working with the Inference Engine,
+   Load and store information for working with the Inference Engine, 
    and any loaded models.
    '''
  
@@ -15,7 +15,7 @@ class Network:
         self.exec_network = None
  
  
-    def load_model(self, model, device="CPU", cpu_extension='/opt/intel/openvino/inference_engine/lib/intel64/libcpu_extension_avx2.so'):
+    def load_model(self, model, device = "CPU", cpu_extension = '/opt/intel/openvino/inference_engine/lib/intel64/libcpu_extension_avx2.so'):
         '''
        Load the model given IR files.
        Defaults to CPU as device for use in the workspace.
@@ -32,7 +32,7 @@ class Network:
             self.plugin.add_extension(cpu_extension, device)
  
         # Read the IR as a IENetwork
-        network = IENetwork(model=model_xml, weights=model_bin)
+        network = IENetwork(model = model_xml, weights = model_bin)
  
         # Load the IENetwork into the plugin
         self.exec_network = self.plugin.load_network(network, device)
