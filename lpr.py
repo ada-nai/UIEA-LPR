@@ -31,7 +31,7 @@ def decode_output(out, encoding):
 
 	return plate_number
 
-def perform_inference(plate_image,args):
+def perform_inference(plate_image,model):
 
 	'''
 	Performs inference on an input image, given a model.
@@ -43,7 +43,7 @@ def perform_inference(plate_image,args):
 	# c = 3
 	h = 24
 	w = 94
-	eval = inference_network.load_model(args.m2)
+	eval = inference_network.load_model(model)
 	print('input_shapes:', eval)
 	# Read the input image
 	image = plate_image.copy()
