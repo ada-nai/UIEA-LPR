@@ -43,7 +43,7 @@ encoding.py -> program for proper decoding of model output to license plate symb
 ## Run the program (Linux)
 To run the program on your local machine, follow the steps mentioned below:
 1. Download the [The Intel® Distribution of OpenVINO™](https://software.intel.com/en-us/openvino-toolkit/choose-download/free-download-linux). Follow the [installation guide if necessary](https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_linux.html)
-2. Set the environment variables as mentioned in the `vinovars.txt` file. ~~if it is not added explicitly to your profile~~.
+2. Set the environment variables by pasting the command as mentioned in the `vinovars.txt` file to the terminal window. ~~If it is not added explicitly to your profile~~.
 3. Run the program by executing the following command:
 `python3 main.py -i PATH_TO_IMAGE/car_1.bmp -m1 'PATH_TO_VEHICLE-DETECTION-MODEL/FP16/vehicle-license-plate-detection-barrier-0106.xml' -m2 'PATH_TO_VEHICLE-RECOGNITION-MODEL/FP16/license-plate-recognition-barrier-0001.xml'`
 
