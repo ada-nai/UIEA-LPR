@@ -52,20 +52,10 @@ def perform_inference(args):
     print('frame shape:', frame.shape)
 
     # Scale the obtained output such that it bounds the plate from original image
-    xmin = int(out[3] * frame.shape[0])
-    ymin = int(out[4] * frame.shape[1])
-    xmax = int(out[5] * frame.shape[0])
-    ymax = int(out[6] * frame.shape[1])
-    
-    pX1 = xmin/300
-    pY1 = ymin/300
-    pX2 = xmax/300
-    pY2 = ymax/300
-    
-    unX1 = int(image.shape[1]*pX1)
-    unY1 = int(image.shape[0]*pY1)
-    unX2 = int(image.shape[1]*pX2)
-    unY2 = int(image.shape[0]*pY2)
+    unX1 = int(image.shape[1]*out[3])
+    unY1 = int(image.shape[0]*out[4])
+    unX2 = int(image.shape[1]*out[5])
+    unY2 = int(image.shape[0]*out[6])
 
     # Create bounding boxes for newly scaled co-ordinates
     cv2.rectangle(image, (unX1, unY1), (unX2, unY2), color = (0, 255, 0))
