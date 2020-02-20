@@ -68,7 +68,7 @@ def perform_inference(plate_image, model):
 	# Obtain the decoded output
 	lp_codes = get_encoding()
 	numbers_list = decode_output(output, lp_codes)
-	print('Recognized License plate number is :')
+	print('Recognized License plate number is: ')
 
 	fin_out = ''
 	for item in numbers_list:
