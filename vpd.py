@@ -64,7 +64,6 @@ def perform_inference(args):
     print('extracted shape:', extracted.shape)
     
     cv2.imwrite('extracted_lp.jpg', extracted)
-    #mod = cv2.resize(extracted, (300, 300))
     print('done with detection and extraction')
     return extracted
 
