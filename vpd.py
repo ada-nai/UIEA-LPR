@@ -42,20 +42,19 @@ def perform_inference(args):
     
     # Extract most probable output
     out = output['DetectionOutput_']
-    out = [k for i in out for j in i for k in j if(k[2] > 0.5 and k[1] != 1)]
-    out = np.asarray(out).flatten()
-    print('Plate Detection output:', out)
-   
-
-    frame = image.copy()
-    frame = cv2.resize(frame, (300, 300))
-    print('frame shape:', frame.shape)
+    
+    # Extract bounding box for result that predicts license plate with highest confidence level
+    resh_out = np.reshape(out, (200, 7)) #reshaping
+    plate_out = resh_out[resh_out[:, 1] == 2] #choosing output that predict label == `license_plate`
+    max_conf_index = np.argmax(plate_out[:, 2]) #choosing license plate bounding box with highest confidence
+    max_conf_out = plate_out[max_conf_index] 
+    print('Plate Detection output:', max_conf_out)
 
     # Scale the obtained output such that it bounds the plate from original image
-    unX1 = int(image.shape[1]*out[3])
-    unY1 = int(image.shape[0]*out[4])
-    unX2 = int(image.shape[1]*out[5])
-    unY2 = int(image.shape[0]*out[6])
+    unX1 = int(image.shape[1]*max_conf_out[3])
+    unY1 = int(image.shape[0]*max_conf_out[4])
+    unX2 = int(image.shape[1]*max_conf_out[5])
+    unY2 = int(image.shape[0]*max_conf_out[6])
 
     # Create bounding boxes for newly scaled co-ordinates
     cv2.rectangle(image, (unX1, unY1), (unX2, unY2), color = (0, 255, 0))
