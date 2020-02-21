@@ -42,6 +42,8 @@ def perform_inference(args):
     
     # Extract most probable output
     out = output['DetectionOutput_']
+    # alt
+    #out = [k for i in out for j in i for k in j if(k[2] > 0.5 and k[1] != 1)] 
     
     # Extract bounding box for result that predicts license plate with highest confidence level
     resh_out = np.reshape(out, (200, 7)) #reshaping
