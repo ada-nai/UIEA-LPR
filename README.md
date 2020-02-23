@@ -31,6 +31,12 @@ encoding.py -> program for proper decoding of model output to license plate symb
 ```
 
 ## Flow of the program
+
+![](https://github.com/ada-nai/UIEA-LPR/tree/master/images/Flowdiag/FlowDiagram.png) | 
+|:--:| 
+|*Project Flow Diagram*|
+
+
 1. `main.py` accepts arguments for inputs. Arguments to be provided are:
   i. Input image (i)
   ii. Path for vehicle/plate detection model (m1)
@@ -48,3 +54,15 @@ To run the program on your local machine, follow the steps mentioned below:
 `python3 main.py -i PATH_TO_IMAGE/car_1.bmp -m1 'PATH_TO_VEHICLE-DETECTION-MODEL/FP16/vehicle-license-plate-detection-barrier-0106.xml' -m2 'PATH_TO_VEHICLE-RECOGNITION-MODEL/FP16/license-plate-recognition-barrier-0001.xml'`
 
 NB: replace `PATH` by the appropriate path to the image/model in your system.
+
+
+## Limitations
+The project uses two pre-trained models, namely - license plate detection model and license plate recognition model. The models have been trained by feeding 'n' images. If we give an input image to our model which doesn't match the characteristics of images from which the model has been trained, the model fails to detect the specific characteristic that we are trying to detect, the vehicle license plate in our case. To solve this issue, we need to re-train the model by feeding more quality images. By doing this, the success rate of our detection will increase considerably.
+
+
+## Applications
+The project after some improvements can be used in areas of high-security concern. The license plate number can be recorded for every vehicle entering the desired premise. This will help different organizations to keep a track of the vehicles entering their premises and will reduce the risk of any unwanted issues. The vehicles which are not registered, will not be allowed to enter the area until the vehicle owner registers his/her vehicle in the system.
+
+
+## Future scope
+The project works only on images. It can be further improved by implementing video inputs. By doing so, the application can be deployed at the edge and the license plates can be detected in real-time. Such systems are currently being used in places where we require high security - in banks, different organizations, etc. The project can be further improved by making a full-fledged application - A web application where in the users are expected to drag and drop an image of their choice in a field, inference will be performed and the license plate number is printed out. An application can be built for android/iOS users which could detect and recognize the license plates in real-time.
