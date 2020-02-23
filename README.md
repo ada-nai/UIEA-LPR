@@ -32,7 +32,7 @@ encoding.py -> program for proper decoding of model output to license plate symb
 
 ## Flow of the program
 
-![](https://github.com/ada-nai/UIEA-LPR/tree/master/images/Flowdiag/FlowDiagram.png) | 
+![](https://github.com/ada-nai/UIEA-LPR/blob/master/images/Flowdiag/FlowDiagram.png) | 
 |:--:| 
 |*Project Flow Diagram*|
 
